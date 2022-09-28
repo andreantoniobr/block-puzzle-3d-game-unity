@@ -7,7 +7,7 @@ public class GridCellSelector : MonoBehaviour
 {
     [SerializeField] private LayerMask layerMask;
 
-    public static event Action<GridCellModel> GridCellSelectedEvent;
+    public static event Action<GridCell> GridCellSelectedEvent;
 
     private void Update()
     {
@@ -20,10 +20,10 @@ public class GridCellSelector : MonoBehaviour
 
     private void GetGridCell(RaycastHit raycastHit)
     {
-        GridCellModel gridCellModel = raycastHit.transform.GetComponent<GridCellModel>();
-        if (gridCellModel)
+        GridCell gridCell = raycastHit.transform.GetComponent<GridCell>();
+        if (gridCell)
         {
-            GridCellSelectedEvent?.Invoke(gridCellModel);
+            GridCellSelectedEvent?.Invoke(gridCell);
         }        
     }
 }

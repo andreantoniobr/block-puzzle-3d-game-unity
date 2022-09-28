@@ -1,11 +1,13 @@
 using System;
 using UnityEngine;
 
-[Serializable]
-public class GridCell
+
+public class GridCell : MonoBehaviour
 {
     [SerializeField] private Vector2Int position;
     [SerializeField] private bool isFull;
+
+    public event Action<bool> GridCellChangeEvent;
 
     public Vector2Int Position
     {
@@ -16,6 +18,15 @@ public class GridCell
     public bool IsFull
     {
         get => isFull;
-        set => isFull = value;
+        set
+        {
+            isFull = value;
+            GridCellChangeEvent?.Invoke(value);
+        }
+    }
+
+    private void Start()
+    {
+        GridCellChangeEvent?.Invoke(isFull);
     }
 }
