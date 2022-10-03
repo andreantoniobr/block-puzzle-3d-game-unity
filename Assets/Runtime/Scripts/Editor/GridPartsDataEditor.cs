@@ -29,7 +29,7 @@ public class GridPartsDataEditor : Editor
             EditorGUILayout.BeginVertical(columnStyle);
             for (int y = 0; y < GridPartsDataConstants.CollsAmount; y++)
             {
-                gridPartsData.GridParts[x * GridPartsDataConstants.RowsAmount + y] = EditorGUILayout.Toggle(gridPartsData.GridParts[x * GridPartsDataConstants.RowsAmount + y]);
+                gridPartsData.GridParts[x + y * GridPartsDataConstants.RowsAmount] = EditorGUILayout.Toggle(gridPartsData.GridParts[x + y * GridPartsDataConstants.RowsAmount]);
             }
             EditorGUILayout.EndVertical();
         }

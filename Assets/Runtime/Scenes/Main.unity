@@ -327,7 +327,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedGridCell: {fileID: 0}
-  gridPartsData: {fileID: 0}
+  gridPartsData: {fileID: 11400000, guid: fe24e6c4d8179f8468f17cbdf59b7e7d, type: 2}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0

@@ -65,6 +65,7 @@ public class GridGenerator : MonoBehaviour
         if (currentGridCell)
         {
             gridCellData[x, y] = currentGridCell;
+            gridCellData[x, y].Position = new Vector2Int(x, y);
             currentGridCell.name = $"GridCell[{x},{y}]";
             currentGridCell.gameObject.layer = layerMaskValue;
         }

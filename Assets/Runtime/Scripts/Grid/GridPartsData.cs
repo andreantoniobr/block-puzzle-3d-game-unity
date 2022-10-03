@@ -11,9 +11,10 @@ public class GridPartsDataConstants
 [CreateAssetMenu(fileName = "GridPartData", menuName = "Parts/New Part", order = 1)]
 public class GridPartsData : ScriptableObject
 {
-    [SerializeField] private bool[] gridParts = new bool[GridPartsDataConstants.RowsAmount * GridPartsDataConstants.CollsAmount];
+    [SerializeField] private List<bool> gridParts = new List<bool>(new bool[GridPartsDataConstants.RowsAmount * GridPartsDataConstants.CollsAmount]);
+    //[SerializeField] private bool[] gridParts = new bool[GridPartsDataConstants.RowsAmount * GridPartsDataConstants.CollsAmount];
 
-    public bool[] GridParts 
+    public List<bool> GridParts 
     {
         get => gridParts;
         set => gridParts = value;
