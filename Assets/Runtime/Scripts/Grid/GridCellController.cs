@@ -56,33 +56,88 @@ public class GridCellController : MonoBehaviour
         if (gridCell && selectedGridCell != gridCell)
         {
             selectedGridCell = gridCell;
-            SetGridPartInGridCells(gridCell);
-        }        
+            SetGridPartInGridCells();
+        }
     }
-
     
-    private void SetGridPartInGridCells(GridCell selectedGridCell)
+    private void SetGridPartInGridCells()
     {
         if (selectedGridCell)
         {
-            List<GridCell> currentSelectedGridCells = GetSelectedGridCells(selectedGridCell);
-            if (currentSelectedGridCells.Count > 0)
+            if (CanGetSelectedGridCells(selectedGridCell, out List<GridCell> gridCells))
             {
-                for (int i = 0; i < currentSelectedGridCells.Count; i++)
+                if (IsEmptyGridCells(gridCells))
                 {
-                    GridCell currentGridCell = currentSelectedGridCells[i];
-                    if (currentGridCell)
-                    {
-                        currentGridCell.IsFull = true;
-                    }                    
+                    SetFullGridCells(gridCells);
                 }
             }
-        }             
+        }
     }
 
-    private List<GridCell> GetSelectedGridCells(GridCell selectedGridCell)
+    private bool IsPlaceableGridPart()
     {
-        List<GridCell> selectedGridCells = new List<GridCell>();        
+        bool isPlaceableGridPart = false;
+        if (gridCellData.Length > 0)
+        {
+            for (int x = 0; x < gridSizeX; x++)
+            {
+                for (int y = 0; y < gridSizeY; y++)
+                {
+                    GridCell gridCell = gridCellData[x,y];
+                    if (gridCell)
+                    {
+                        if (CanGetSelectedGridCells(gridCell, out List<GridCell> gridCells))
+                        {
+                            if (IsEmptyGridCells(gridCells))
+                            {
+                                isPlaceableGridPart = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return isPlaceableGridPart;
+    }
+
+    private bool IsEmptyGridCells(List<GridCell> gridCells)
+    {
+        bool isEmptyGridCells = true;
+        if (gridCells.Count > 0)
+        {
+            for (int i = 0; i < gridCells.Count; i++)
+            {
+                GridCell currentGridCell = gridCells[i];
+                if (currentGridCell && currentGridCell.IsFull == true)
+                {
+                    isEmptyGridCells = false;
+                    break;
+                }
+            }
+        }
+        return isEmptyGridCells;
+    }
+
+    private void SetFullGridCells(List<GridCell> gridCells)
+    {
+        if (gridCells.Count > 0)
+        {
+            for (int i = 0; i < gridCells.Count; i++)
+            {
+                GridCell currentGridCell = gridCells[i];
+                if (currentGridCell)
+                {
+                    currentGridCell.IsFull = true;
+                }
+            }
+        }
+    }
+
+    private bool CanGetSelectedGridCells(GridCell selectedGridCell, out List<GridCell> gridCells)
+    {
+        bool canGetSelectedGridCells = true;
+        gridCells = new List<GridCell>();
         if (selectedGridCell && gridPartsData && gridCellData.Length > 0)
         {
             int gridPartRowsAmount = GridPartsDataConstants.RowsAmount;
@@ -99,18 +154,18 @@ public class GridCellController : MonoBehaviour
                         int gridCellY = y + startY;
                         if (IsInArrayRange(gridCellX, maxGridCellX) && IsInArrayRange(gridCellY, maxGridCellY))
                         {
-                            selectedGridCells.Add(gridCellData[gridCellX, gridCellY]);
+                            gridCells.Add(gridCellData[gridCellX, gridCellY]);
+                        }
+                        else
+                        {
+                            canGetSelectedGridCells = false;
+                            break;
                         }
                     }
                 }
             }
         }
-        return selectedGridCells;
-    }
-
-    private bool IsPlaceableGridCell()
-    {
-        return false;
+        return canGetSelectedGridCells;
     }
 
     private bool IsFullGridPartCell(int x, int y)
