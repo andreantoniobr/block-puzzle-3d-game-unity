@@ -7,7 +7,8 @@ using UnityEngine;
 public class GridCellModelController : MonoBehaviour
 {
     [SerializeField] private BlockModel blockModell;
-    
+    [SerializeField] private BlockModel blockModellHover;
+
     private GridCell gridCell;
 
     private void Awake()
@@ -26,6 +27,7 @@ public class GridCellModelController : MonoBehaviour
         if (gridCell)
         {
             gridCell.GridCellChangeEvent += OnGridCellChangeState;
+            gridCell.GridCellHoverEvent += OnHoverGridCell;
         }
     }
 
@@ -34,6 +36,7 @@ public class GridCellModelController : MonoBehaviour
         if (gridCell)
         {
             gridCell.GridCellChangeEvent -= OnGridCellChangeState;
+            gridCell.GridCellHoverEvent += OnHoverGridCell;
         }
     }
 
@@ -43,5 +46,10 @@ public class GridCellModelController : MonoBehaviour
         {
             blockModell.gameObject.SetActive(isActive);
         }        
+    }
+
+    private void OnHoverGridCell(bool isActive)
+    {
+        blockModellHover.gameObject.SetActive(isActive);
     }
 }

@@ -155,6 +155,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 64
+  gridCell: {fileID: 0}
 --- !u!4 &245450738
 Transform:
   m_ObjectHideFlags: 0
@@ -309,7 +310,7 @@ MonoBehaviour:
   gridSizeX: 9
   gridSizeY: 9
   gridCellModel: {fileID: 2429081234523678419, guid: 6b7a60cf3c332f3499745e178a56404a, type: 3}
-  gridCellSize: 1.2
+  gridCellSize: 1
   gridPositionZ: 0
   layerMask:
     serializedVersion: 2

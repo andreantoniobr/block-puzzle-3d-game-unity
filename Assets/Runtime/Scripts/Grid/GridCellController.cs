@@ -18,6 +18,8 @@ public class GridCellController : MonoBehaviour
 
     private GridCell[,] gridCellData;
 
+    private List<GridCell> hoverGridCells;
+
     private void Awake()
     {
         gridGenerator = GetComponent<GridGenerator>();
@@ -33,6 +35,8 @@ public class GridCellController : MonoBehaviour
         maxGridCellX = gridSizeX - 1;
         maxGridCellY = gridSizeY - 1;
 
+        hoverGridCells = new List<GridCell>();
+
         SubscribeInEvents();
     }
 
@@ -43,15 +47,32 @@ public class GridCellController : MonoBehaviour
 
     private void SubscribeInEvents()
     {
-        GridCellSelector.GridCellSelectedEvent += OnGridCellSelected;
+        GridCellSelector.GridCellHoverEvent += OnHoverGridCell;
+        GridCellSelector.GridCellSelectedEvent += OnSelectGridCell;
     }
 
     private void UnsubscribeInEvents()
     {
-        GridCellSelector.GridCellSelectedEvent -= OnGridCellSelected;
+        GridCellSelector.GridCellHoverEvent -= OnHoverGridCell;
+        GridCellSelector.GridCellSelectedEvent -= OnSelectGridCell;
     }
 
-    private void OnGridCellSelected(GridCell gridCell)
+    private void OnHoverGridCell(GridCell gridCell)
+    {        
+        if (gridCell)
+        {
+            EraseHoverGridCells(hoverGridCells);
+            if (CanGetSelectedGridCells(gridCell, out List<GridCell> gridCells))
+            {
+                if (IsEmptyGridCells(gridCells))
+                {                    
+                    SetHoverGridCells(gridCells);
+                }
+            }
+        }
+    }
+
+    private void OnSelectGridCell(GridCell gridCell)
     {
         if (gridCell && selectedGridCell != gridCell)
         {
@@ -132,6 +153,38 @@ public class GridCellController : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void SetHoverGridCells(List<GridCell> gridCells)
+    {        
+        if (gridCells.Count > 0)
+        {
+            for (int i = 0; i < gridCells.Count; i++)
+            {
+                GridCell currentGridCell = gridCells[i];
+                if (currentGridCell)
+                {
+                    currentGridCell.IsHover = true;
+                    hoverGridCells.Add(currentGridCell);
+                }
+            }
+        }
+    }
+
+    private void EraseHoverGridCells(List<GridCell> gridCells)
+    {
+        if (gridCells.Count > 0)
+        {
+            for (int i = 0; i < gridCells.Count; i++)
+            {
+                GridCell currentGridCell = gridCells[i];
+                if (currentGridCell)
+                {
+                    currentGridCell.IsHover = false;
+                }
+            }
+            gridCells.Clear();
+        }        
     }
 
     private bool CanGetSelectedGridCells(GridCell selectedGridCell, out List<GridCell> gridCells)

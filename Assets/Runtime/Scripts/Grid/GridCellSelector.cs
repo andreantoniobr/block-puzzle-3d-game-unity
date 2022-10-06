@@ -6,19 +6,23 @@ using UnityEngine;
 public class GridCellSelector : MonoBehaviour
 {
     [SerializeField] private LayerMask layerMask;
+    [SerializeField] private GridCell gridCell;
 
+    public static event Action<GridCell> GridCellHoverEvent;
     public static event Action<GridCell> GridCellSelectedEvent;
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        UpdateGridCell();
+    }
+
+    private void UpdateGridCell()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(InputController.GetInput());
+        if (Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, layerMask))
         {
-            Ray ray = Camera.main.ScreenPointToRay(InputController.GetInput());
-            if (Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, layerMask))
-            {
-                GetGridCell(raycastHit);
-            }
-        }        
+            GetGridCell(raycastHit);
+        }
     }
 
     private void GetGridCell(RaycastHit raycastHit)
@@ -26,7 +30,11 @@ public class GridCellSelector : MonoBehaviour
         GridCell gridCell = raycastHit.transform.GetComponent<GridCell>();
         if (gridCell)
         {
-            GridCellSelectedEvent?.Invoke(gridCell);
-        }        
+            GridCellHoverEvent?.Invoke(gridCell);
+            if (Input.GetMouseButtonDown(0))
+            {
+                GridCellSelectedEvent?.Invoke(gridCell);
+            }
+        }
     }
 }
