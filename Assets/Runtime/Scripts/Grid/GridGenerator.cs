@@ -4,53 +4,42 @@ using UnityEngine;
 
 public class GridGenerator : MonoBehaviour
 {
-    [SerializeField] private int gridSizeX = 3;
-    [SerializeField] private int gridSizeY = 3;
+    [SerializeField] private Vector2Int gridSize;
 
     [SerializeField] private GridCell gridCellModel;
     [SerializeField] private float gridCellSize = 1f;
-    [SerializeField] private float gridPositionZ = 0;
-    [SerializeField] private LayerMask layerMask;
-
-    private int layerMaskValue;
-    private float gridCellPositionDecrementX;
-    private float gridCellPositionDecrementY;
+    [SerializeField] private float positionZ = 0;
+    [SerializeField] private Vector2 gridCellPositionDecrement;
     
+    private int layerMaskValue;
+      
     private GridCell[,] gridCellData;
-
+    
+    public Vector2Int GridSize => gridSize;
+    public Vector2 GridCellPositionDecrement => gridCellPositionDecrement;
     public GridCell[,] GridCellData => gridCellData;
 
     private void Awake()
     {
         StartGridCellData();
-        SetLayerMask();
-    }    
-
-    private void Start()
-    {
         GenerateGrid();
     }
 
     private void StartGridCellData()
     {
-        gridCellData = new GridCell[gridSizeX, gridSizeY];
-    }
-
-    private void SetLayerMask()
-    {
-        layerMaskValue = LayerMaskUtility.GetLayerMask(layerMask);
+        gridCellData = new GridCell[gridSize.x, gridSize.y];
     }
 
     private void GenerateGrid()
     {
         if (gridCellData.Length > 0)
         {
-            gridCellPositionDecrementX = GetDecrement(gridSizeX);
-            gridCellPositionDecrementY = GetDecrement(gridSizeY);
+            gridCellPositionDecrement.x = GetDecrement(gridSize.x);
+            gridCellPositionDecrement.y = GetDecrement(gridSize.y);
 
-            for (int x = 0; x < gridSizeX; x++)
+            for (int x = 0; x < gridSize.x; x++)
             {
-                for (int y = 0; y < gridSizeY; y++)
+                for (int y = 0; y < gridSize.y; y++)
                 {
                     SetGridCellInstance(x, y);
                 }
@@ -67,15 +56,14 @@ public class GridGenerator : MonoBehaviour
             gridCellData[x, y] = currentGridCell;
             gridCellData[x, y].Position = new Vector2Int(x, y);
             currentGridCell.name = $"GridCell[{x},{y}]";
-            currentGridCell.gameObject.layer = layerMaskValue;
         }
     }
 
     private Vector3 GetGridCellPosition(int x, int y)
     {
-        float gridCellPositionX = (x - gridCellPositionDecrementX) * gridCellSize;
-        float gridCellPositionY = (y - gridCellPositionDecrementY) * gridCellSize;
-        return new Vector3(gridCellPositionX, gridCellPositionY, gridPositionZ);
+        float gridCellPositionX = (x - gridCellPositionDecrement.x) * gridCellSize;
+        float gridCellPositionY = (y - gridCellPositionDecrement.y) * gridCellSize;
+        return new Vector3(gridCellPositionX, gridCellPositionY, positionZ);
     }
 
     private float GetDecrement(int a)

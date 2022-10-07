@@ -27,14 +27,18 @@ public class GridCellSelector : MonoBehaviour
 
     private void GetGridCell(RaycastHit raycastHit)
     {
-        GridCell gridCell = raycastHit.transform.GetComponent<GridCell>();
-        if (gridCell)
+        GridBackgroundCell gridBackgroundCell = raycastHit.transform.GetComponent<GridBackgroundCell>();
+        if (gridBackgroundCell)
         {
-            GridCellHoverEvent?.Invoke(gridCell);
-            if (Input.GetMouseButtonDown(0))
+            GridCell gridCell = gridBackgroundCell.GridCell;
+            if (gridCell)
             {
-                GridCellSelectedEvent?.Invoke(gridCell);
+                GridCellHoverEvent?.Invoke(gridCell);
+                if (Input.GetMouseButtonDown(0))
+                {
+                    GridCellSelectedEvent?.Invoke(gridCell);
+                }
             }
-        }
+        }        
     }
 }
