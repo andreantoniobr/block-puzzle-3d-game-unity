@@ -24,17 +24,11 @@ public class SpawnerPartsController : MonoBehaviour
                 Part part = GetPart(gridPartDatas[i]);
                 if (part)
                 {
-                    SpawnPartEvent?.Invoke(part);
-                    HidePart(part);
+                    SpawnPartEvent?.Invoke(part);                    
                 }
             }
         }
-    }
-
-    private void HidePart(Part part)
-    {
-        part.gameObject.SetActive(false);
-    }
+    }    
 
     private Part GetPart(GridPartData gridPartData)
     {
