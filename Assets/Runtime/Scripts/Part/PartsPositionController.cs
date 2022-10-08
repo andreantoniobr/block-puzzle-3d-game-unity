@@ -15,12 +15,12 @@ public class PartsPositionController : MonoBehaviour
 
     private void Awake()
     {
-        PartsSelectorController.AvaliablePartsEvent += OnAvaliableParts;
+        PartsController.AvaliablePartsEvent += OnAvaliableParts;
     }
 
     private void OnDestroy()
     {
-        PartsSelectorController.AvaliablePartsEvent -= OnAvaliableParts;
+        PartsController.AvaliablePartsEvent -= OnAvaliableParts;
     }
 
     private void OnAvaliableParts(List<Part> avaliableParts)

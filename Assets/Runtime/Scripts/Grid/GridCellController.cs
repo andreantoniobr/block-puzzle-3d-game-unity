@@ -49,14 +49,14 @@ public class GridCellController : MonoBehaviour
     {
         GridCellSelector.GridCellHoverEvent += OnHoverGridCell;
         GridCellSelector.GridCellSelectedEvent += OnSelectGridCell;
-        PartsSelectorController.SelectedMainPartEvent += OnSelectedMainPart;
+        PartsController.SelectedMainPartEvent += OnSelectedMainPart;
     }
 
     private void UnsubscribeInEvents()
     {
         GridCellSelector.GridCellHoverEvent -= OnHoverGridCell;
         GridCellSelector.GridCellSelectedEvent -= OnSelectGridCell;
-        PartsSelectorController.SelectedMainPartEvent -= OnSelectedMainPart;
+        PartsController.SelectedMainPartEvent -= OnSelectedMainPart;
     }
 
     private void OnHoverGridCell(GridCell gridCell)

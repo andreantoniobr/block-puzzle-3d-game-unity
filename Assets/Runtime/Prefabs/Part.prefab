@@ -91,7 +91,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1268458185974544616}
   - component: {fileID: 1537518639513690070}
-  m_Layer: 0
+  - component: {fileID: 9048207991585133692}
+  m_Layer: 7
   m_Name: Part
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,3 +127,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridPartData: {fileID: 0}
+--- !u!65 &9048207991585133692
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2111471221997161863}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}

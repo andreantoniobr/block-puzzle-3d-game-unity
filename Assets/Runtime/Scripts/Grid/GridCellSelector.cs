@@ -18,7 +18,7 @@ public class GridCellSelector : MonoBehaviour
 
     private void UpdateGridCell()
     {
-        Ray ray = Camera.main.ScreenPointToRay(InputController.GetInput());
+        Ray ray = Camera.main.ScreenPointToRay(InputController.InputPosition);
         if (Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, layerMask))
         {
             GetGridCell(raycastHit);
