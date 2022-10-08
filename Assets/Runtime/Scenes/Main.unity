@@ -374,7 +374,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedGridCell: {fileID: 0}
-  gridPartsData: {fileID: 11400000, guid: fe24e6c4d8179f8468f17cbdf59b7e7d, type: 2}
+  gridPartData: {fileID: 11400000, guid: 6f68ec60621fa3449af41dc18dfed7a8, type: 2}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -467,6 +467,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1153497677}
+  - component: {fileID: 1153497678}
+  - component: {fileID: 1153497679}
   m_Layer: 0
   m_Name: PartsController
   m_TagString: Untagged
@@ -488,3 +490,36 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1153497678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1153497676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ac3dbd1d150996418f74202f6f30ba5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  partsData:
+  - {fileID: 11400000, guid: ba3fe6047d4495041953c944c4ff6186, type: 2}
+  - {fileID: 11400000, guid: 8fb2120637715c44286ec1c8dc23276c, type: 2}
+  - {fileID: 11400000, guid: 6f68ec60621fa3449af41dc18dfed7a8, type: 2}
+--- !u!114 &1153497679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1153497676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7930dc6ecb5d21648aabb9a19fc9586e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  partModel: {fileID: 1537518639513690070, guid: 841e6769f687dbb4498c3df8eb0b23c4, type: 3}
+  gridPartDatas:
+  - {fileID: 11400000, guid: ba3fe6047d4495041953c944c4ff6186, type: 2}
+  - {fileID: 11400000, guid: 8fb2120637715c44286ec1c8dc23276c, type: 2}
+  - {fileID: 11400000, guid: 6f68ec60621fa3449af41dc18dfed7a8, type: 2}

@@ -6,7 +6,7 @@ using UnityEngine;
 public class GridCellController : MonoBehaviour
 {    
     [SerializeField] private GridCell selectedGridCell;
-    [SerializeField] private GridPartsData gridPartsData;
+    [SerializeField] private GridPartData gridPartData;
 
     private GridGenerator gridGenerator;
 
@@ -49,12 +49,14 @@ public class GridCellController : MonoBehaviour
     {
         GridCellSelector.GridCellHoverEvent += OnHoverGridCell;
         GridCellSelector.GridCellSelectedEvent += OnSelectGridCell;
+        PartsController.PartChangeEvent += OnPartChange;
     }
 
     private void UnsubscribeInEvents()
     {
         GridCellSelector.GridCellHoverEvent -= OnHoverGridCell;
         GridCellSelector.GridCellSelectedEvent -= OnSelectGridCell;
+        PartsController.PartChangeEvent -= OnPartChange;
     }
 
     private void OnHoverGridCell(GridCell gridCell)
@@ -81,6 +83,11 @@ public class GridCellController : MonoBehaviour
         }
     }
     
+    private void OnPartChange(GridPartData newGridPartData)
+    {
+        gridPartData = newGridPartData;
+    }
+
     private void SetGridPartInGridCells()
     {
         if (selectedGridCell)
@@ -191,10 +198,10 @@ public class GridCellController : MonoBehaviour
     {
         bool canGetSelectedGridCells = true;
         gridCells = new List<GridCell>();
-        if (selectedGridCell && gridPartsData && gridCellData.Length > 0)
+        if (selectedGridCell && gridPartData && gridCellData.Length > 0)
         {
-            int gridPartRowsAmount = GridPartsDataConstants.RowsAmount;
-            int gridPartCollsAmount = GridPartsDataConstants.CollsAmount;
+            int gridPartRowsAmount = GridPartDataConstants.RowsAmount;
+            int gridPartCollsAmount = GridPartDataConstants.CollsAmount;
             int startX = selectedGridCell.Position.x - (int) ((gridPartRowsAmount - 1) / 2);
             int startY = selectedGridCell.Position.y - (int) ((gridPartCollsAmount - 1) / 2);
             for (int x = 0; x < gridPartRowsAmount; x++)
@@ -223,7 +230,7 @@ public class GridCellController : MonoBehaviour
 
     private bool IsFullGridPartCell(int x, int y)
     {
-        return gridPartsData.GridParts[x + y * GridPartsDataConstants.RowsAmount];
+        return gridPartData.GridPart[x + y * GridPartDataConstants.RowsAmount];
     }
 
     private bool IsInArrayRange(int index, int maxIndexInRange)

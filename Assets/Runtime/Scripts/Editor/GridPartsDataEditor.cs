@@ -2,14 +2,14 @@ using UnityEngine;
 using UnityEditor;
 
 //https://stackoverflow.com/questions/49353971/how-to-create-multidimensional-array-in-unity-inspector
-[CustomEditor(typeof(GridPartsData))]
-public class GridPartsDataEditor : Editor
+[CustomEditor(typeof(GridPartData))]
+public class GridPartDataEditor : Editor
 {
-    GridPartsData gridPartsData;
+    GridPartData gridPartData;
 
     private void OnEnable()
     {
-        gridPartsData = target as GridPartsData;
+        gridPartData = target as GridPartData;
     }
 
     public override void OnInspectorGUI()
@@ -24,12 +24,12 @@ public class GridPartsDataEditor : Editor
         columnStyle.fixedWidth = 25;
 
         EditorGUILayout.BeginHorizontal(tableStyle);
-        for (int x = 0; x < GridPartsDataConstants.RowsAmount; x++)
+        for (int x = 0; x < GridPartDataConstants.RowsAmount; x++)
         {
             EditorGUILayout.BeginVertical(columnStyle);
-            for (int y = 0; y < GridPartsDataConstants.CollsAmount; y++)
+            for (int y = 0; y < GridPartDataConstants.CollsAmount; y++)
             {
-                gridPartsData.GridParts[x + y * GridPartsDataConstants.RowsAmount] = EditorGUILayout.Toggle(gridPartsData.GridParts[x + y * GridPartsDataConstants.RowsAmount]);
+                gridPartData.GridPart[x + y * GridPartDataConstants.RowsAmount] = EditorGUILayout.Toggle(gridPartData.GridPart[x + y * GridPartDataConstants.RowsAmount]);
             }
             EditorGUILayout.EndVertical();
         }

@@ -9,8 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22bc6ee6a26ac554bbee8f3aca6c7481, type: 3}
+  m_Script: {fileID: 11500000, guid: a2fd9a7965bef3745b217edeeacd7fce, type: 3}
   m_Name: GridPartData 2
   m_EditorClassIdentifier: 
-  istrue: 1
-  gridParts: 000000010101000000
+  gridPart: 000100000100000100

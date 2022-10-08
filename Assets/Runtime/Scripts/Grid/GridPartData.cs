@@ -2,21 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GridPartsDataConstants
+public class GridPartDataConstants
 {
     public const int CollsAmount = 3;
     public const int RowsAmount = 3;
 }
 
 [CreateAssetMenu(fileName = "GridPartData", menuName = "Parts/New Part", order = 1)]
-public class GridPartsData : ScriptableObject
+public class GridPartData : ScriptableObject
 {
-    [SerializeField] private List<bool> gridParts = new List<bool>(new bool[GridPartsDataConstants.RowsAmount * GridPartsDataConstants.CollsAmount]);
+    [SerializeField] private List<bool> gridPart = new List<bool>(new bool[GridPartDataConstants.RowsAmount * GridPartDataConstants.CollsAmount]);
     //[SerializeField] private bool[] gridParts = new bool[GridPartsDataConstants.RowsAmount * GridPartsDataConstants.CollsAmount];
 
-    public List<bool> GridParts 
+    public List<bool> GridPart 
     {
-        get => gridParts;
-        set => gridParts = value;
+        get => gridPart;
+        set => gridPart = value;
     }
 }
