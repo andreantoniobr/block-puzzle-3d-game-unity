@@ -7,7 +7,9 @@ public class SpawnerPartsController : MonoBehaviour
 {
     [SerializeField] private Part partModel;
     [SerializeField] private GridPartData[] gridPartDatas;
+    [SerializeField] List<Part> spawnedParts;
 
+    public List<Part> SpawnedParts => spawnedParts;
     public static event Action<Part> SpawnPartEvent;
 
     private void Start()
@@ -15,7 +17,7 @@ public class SpawnerPartsController : MonoBehaviour
         SpawnAllParts();
     }
 
-    private void SpawnAllParts()
+    public void SpawnAllParts()
     {
         if (gridPartDatas.Length > 0)
         {
@@ -24,6 +26,7 @@ public class SpawnerPartsController : MonoBehaviour
                 Part part = GetPart(gridPartDatas[i]);
                 if (part)
                 {
+                    spawnedParts.Add(part);
                     SpawnPartEvent?.Invoke(part);                    
                 }
             }

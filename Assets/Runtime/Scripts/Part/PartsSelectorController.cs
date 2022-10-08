@@ -7,7 +7,7 @@ public class PartsSelectorController : MonoBehaviour
 {
     [SerializeField] private LayerMask layerMask;
     public static event Action<Part> PartSelectedEvent;
-
+    
     private void Update()
     {
         if (InputController.IsHolding)

@@ -3,70 +3,70 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(SpawnerPartsController))]
 public class PartsController : MonoBehaviour
 {
-    [SerializeField] private List<Part> allParts;
     [SerializeField] private List<Part> avaliableParts;
     [SerializeField] private Part selectedMainPart;
 
-    private readonly int partsAmount = 3;    
+    private readonly int avaliablePartsAmount = 3;
+    private SpawnerPartsController spawnerPartsController;
 
     public static event Action<List<Part>> AvaliablePartsEvent;
     public static event Action<Part> SelectedMainPartEvent;
 
-    public List<Part> AllParts => allParts;
-
     private void Awake()
     {
-        SpawnerPartsController.SpawnPartEvent += OnSpawnPart;
+        spawnerPartsController = GetComponent<SpawnerPartsController>();
         PartsSelectorController.PartSelectedEvent += OnPartSelectedEvent;
     }
 
     private void OnDestroy()
     {
-        SpawnerPartsController.SpawnPartEvent -= OnSpawnPart;
         PartsSelectorController.PartSelectedEvent -= OnPartSelectedEvent;
     }
 
     private void Start()
     {
-        GetAvaliableParts();        
-    }
-
-    private void OnSpawnPart(Part newPart)
-    {
-        AddPart(newPart);
-    }
-
+        if (spawnerPartsController)
+        {
+            spawnerPartsController.SpawnAllParts();
+            GetAvaliableParts();                       
+        }                
+    }    
     private void OnPartSelectedEvent(Part part)
     {
         if (selectedMainPart != part)
         {
             selectedMainPart = part;
-        }
-    }
-
-    private void AddPart(Part newPart)
-    {
-        if (NotContains(newPart, allParts))
-        {
-            allParts.Add(newPart);
+            SelectedMainPartEvent?.Invoke(part);
         }
     }
 
     private void GetAvaliableParts()
     {
         int selectedPartsAmount = 0;
-        while (selectedPartsAmount < partsAmount)
+        if (spawnerPartsController.SpawnedParts.Count > 0)
         {
-            Part part = GetRandomPart();
-            if (part && NotContains(part, avaliableParts))
+            while (selectedPartsAmount < avaliablePartsAmount)
             {
-                avaliableParts.Add(part);
-                selectedPartsAmount++;
+                Part part = GetRandomPart();
+                if (part)
+                {
+                    if (NotContains(part, avaliableParts))
+                    {
+                        avaliableParts.Add(part);
+                        selectedPartsAmount++;
+                    }
+                }
+                else
+                {
+                    break;
+                }
             }
         }
-        if (avaliableParts.Count >= partsAmount)
+        
+        if (avaliableParts.Count >= avaliablePartsAmount)
         {            
             AvaliablePartsEvent?.Invoke(avaliableParts);
         }
@@ -75,15 +75,18 @@ public class PartsController : MonoBehaviour
     private Part GetRandomPart()
     {
         Part part = null;
-        int partsAmount = allParts.Count;
-        if (partsAmount > 0)
+        if (spawnerPartsController)
         {
-            int randomPartIndex = UnityEngine.Random.Range(0, partsAmount);
-            if (randomPartIndex >= 0 && randomPartIndex < partsAmount)
+            int partsAmount = spawnerPartsController.SpawnedParts.Count;
+            if (partsAmount > 0)
             {
-                part = allParts[randomPartIndex];
+                int randomPartIndex = UnityEngine.Random.Range(0, partsAmount);
+                if (randomPartIndex >= 0 && randomPartIndex < partsAmount)
+                {
+                    part = spawnerPartsController.SpawnedParts[randomPartIndex];
+                }
             }
-        }
+        }        
         return part;
     }
 
