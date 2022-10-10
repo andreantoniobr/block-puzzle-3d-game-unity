@@ -467,13 +467,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1153497677}
-  - component: {fileID: 1153497679}
-  - component: {fileID: 1153497680}
-  - component: {fileID: 1153497678}
-  - component: {fileID: 1153497681}
   - component: {fileID: 1153497682}
+  - component: {fileID: 1153497681}
+  - component: {fileID: 1153497680}
+  - component: {fileID: 1153497679}
+  - component: {fileID: 1153497678}
   m_Layer: 0
-  m_Name: PartsController
+  m_Name: BlocksController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -502,31 +502,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1153497676}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ac3dbd1d150996418f74202f6f30ba5, type: 3}
+  m_Script: {fileID: 11500000, guid: c4d3d7820d13ad9409761a3393036e17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allParts: []
-  avaliableParts: []
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!114 &1153497679
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1153497676}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7930dc6ecb5d21648aabb9a19fc9586e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  partModel: {fileID: 1537518639513690070, guid: 841e6769f687dbb4498c3df8eb0b23c4, type: 3}
-  gridPartDatas:
-  - {fileID: 11400000, guid: 6f68ec60621fa3449af41dc18dfed7a8, type: 2}
-  - {fileID: 11400000, guid: ba3fe6047d4495041953c944c4ff6186, type: 2}
-  - {fileID: 11400000, guid: 8fb2120637715c44286ec1c8dc23276c, type: 2}
-  - {fileID: 11400000, guid: 499f39eaf0428b443962a2e2d1057609, type: 2}
-  - {fileID: 11400000, guid: 5a9d6080a41e00646bacc3473f5f9be5, type: 2}
---- !u!114 &1153497680
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -538,29 +520,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 331f9c9676a589b42a59ffd880f43339, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  partsPositions:
-  - Position: {x: -3, y: -7, z: 0}
+  blocksPositions:
+  - Position: {x: -3, y: 7, z: 0}
     IsFull: 0
-  - Position: {x: 0, y: -7, z: 0}
+  - Position: {x: 0, y: 7, z: 0}
     IsFull: 0
-  - Position: {x: 3, y: -7, z: 0}
+  - Position: {x: 3, y: 7, z: 0}
     IsFull: 0
---- !u!114 &1153497681
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1153497676}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 279e02ef0544be64cb0b942fb428bee7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 128
---- !u!114 &1153497682
+--- !u!114 &1153497680
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -572,3 +539,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1341c847ecbc1a54ab588ff51d71d113, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1153497681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1153497676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce880d3c8fb593b40adc4ec95100a600, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  avaliableBlocks: []
+  selectedMainBlock: {fileID: 0}
+--- !u!114 &1153497682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1153497676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7930dc6ecb5d21648aabb9a19fc9586e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blockModel: {fileID: 725367014591624844, guid: 841e6769f687dbb4498c3df8eb0b23c4, type: 3}
+  blockDatas:
+  - {fileID: 11400000, guid: 3c9c7bfb02652fb4cb405258f219a890, type: 2}
+  - {fileID: 11400000, guid: d09ad8448b051ae4fb4dde8760dc7280, type: 2}
+  - {fileID: 11400000, guid: 6716cf9949d53f44b87dee36a3ec4c29, type: 2}
+  - {fileID: 11400000, guid: b169fef4677efbf489d90f2063b18fc4, type: 2}
+  spawnedBlocks: []

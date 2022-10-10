@@ -2,11 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public struct Block2
+{
+    public List<GridCell> GridCells;
+}
+
 [RequireComponent(typeof(GridGenerator))]
 public class GridCellController : MonoBehaviour
 {    
     [SerializeField] private GridCell selectedGridCell;
-    [SerializeField] private GridPartData gridPartData;
+    [SerializeField] private BlockData blockData;
 
     private GridGenerator gridGenerator;
 
@@ -49,14 +54,14 @@ public class GridCellController : MonoBehaviour
     {
         GridCellSelector.GridCellHoverEvent += OnHoverGridCell;
         GridCellSelector.GridCellSelectedEvent += OnSelectGridCell;
-        PartsController.SelectedMainPartEvent += OnSelectedMainPart;
+        BlocksController.SelectedMainBlockEvent += OnSelectedMainBlock;
     }
 
     private void UnsubscribeInEvents()
     {
         GridCellSelector.GridCellHoverEvent -= OnHoverGridCell;
         GridCellSelector.GridCellSelectedEvent -= OnSelectGridCell;
-        PartsController.SelectedMainPartEvent -= OnSelectedMainPart;
+        BlocksController.SelectedMainBlockEvent -= OnSelectedMainBlock;
     }
 
     private void OnHoverGridCell(GridCell gridCell)
@@ -79,35 +84,49 @@ public class GridCellController : MonoBehaviour
         if (gridCell && selectedGridCell != gridCell)
         {
             selectedGridCell = gridCell;
-            SetGridPartInGridCells();
+            TryPlaceBlock();
         }
     }
     
-    private void OnSelectedMainPart(Part part)
+    private void OnSelectedMainBlock(Block block)
     {
-        if (part)
+        if (block)
         {
-            gridPartData = part.GridPartData;
+            blockData = block.BlockData;
         }        
     }
 
-    private void SetGridPartInGridCells()
+    private void TryPlaceBlock()
     {
-        if (selectedGridCell)
+        if (selectedGridCell && CanGetSelectedGridCells(selectedGridCell, out List<GridCell> gridCells))
         {
-            if (CanGetSelectedGridCells(selectedGridCell, out List<GridCell> gridCells))
+            if (IsEmptyGridCells(gridCells))
             {
-                if (IsEmptyGridCells(gridCells))
-                {
-                    SetFullGridCells(gridCells);
-                }
+                PlaceBlock(gridCells);
+                CheckAllCompleteGridParts();
             }
         }
     }
 
-    private bool IsPlaceableGridPart()
+    private void PlaceBlock(List<GridCell> gridCells)
     {
-        bool isPlaceableGridPart = false;
+        SetFullGridCells(gridCells);
+    }
+
+    private void CheckAllCompleteGridParts()
+    {
+    }
+
+    private void RemoveCompleteGridPart()
+    {
+
+    }
+
+    
+
+    private bool IsPlaceableBlock()
+    {
+        bool isPlaceableBlock = false;
         if (gridCellData.Length > 0)
         {
             for (int x = 0; x < gridSizeX; x++)
@@ -121,7 +140,7 @@ public class GridCellController : MonoBehaviour
                         {
                             if (IsEmptyGridCells(gridCells))
                             {
-                                isPlaceableGridPart = true;
+                                isPlaceableBlock = true;
                                 break;
                             }
                         }
@@ -129,7 +148,7 @@ public class GridCellController : MonoBehaviour
                 }
             }
         }
-        return isPlaceableGridPart;
+        return isPlaceableBlock;
     }
 
     private bool IsEmptyGridCells(List<GridCell> gridCells)
@@ -201,17 +220,17 @@ public class GridCellController : MonoBehaviour
     {
         bool canGetSelectedGridCells = true;
         gridCells = new List<GridCell>();
-        if (selectedGridCell && gridPartData && gridCellData.Length > 0)
+        if (selectedGridCell && blockData && gridCellData.Length > 0)
         {
-            int gridPartRowsAmount = GridPartDataConstants.RowsAmount;
-            int gridPartCollsAmount = GridPartDataConstants.CollsAmount;
-            int startX = selectedGridCell.Position.x - (int) ((gridPartRowsAmount - 1) / 2);
-            int startY = selectedGridCell.Position.y - (int) ((gridPartCollsAmount - 1) / 2);
-            for (int x = 0; x < gridPartRowsAmount; x++)
+            int blockRowsAmount = BlockDataConstants.RowsAmount;
+            int blockCollsAmount = BlockDataConstants.CollsAmount;
+            int startX = selectedGridCell.Position.x - (int) ((blockRowsAmount - 1) / 2);
+            int startY = selectedGridCell.Position.y - (int) ((blockCollsAmount - 1) / 2);
+            for (int x = 0; x < blockRowsAmount; x++)
             {
-                for (int y = 0; y < gridPartCollsAmount; y++)
+                for (int y = 0; y < blockCollsAmount; y++)
                 {
-                    if (IsFullGridPartCell(x, y))
+                    if (IsFullBlockCell(x, y))
                     {
                         int gridCellX = x + startX;
                         int gridCellY = y + startY;
@@ -231,9 +250,9 @@ public class GridCellController : MonoBehaviour
         return canGetSelectedGridCells;
     }
 
-    private bool IsFullGridPartCell(int x, int y)
+    private bool IsFullBlockCell(int x, int y)
     {
-        return gridPartData.GridPart[x + y * GridPartDataConstants.RowsAmount];
+        return blockData.BlockCells[x + y * BlockDataConstants.RowsAmount];
     }
 
     private bool IsInArrayRange(int index, int maxIndexInRange)

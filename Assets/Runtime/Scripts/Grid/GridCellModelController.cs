@@ -6,8 +6,8 @@ using UnityEngine;
 [RequireComponent(typeof(GridCell))]
 public class GridCellModelController : MonoBehaviour
 {
-    [SerializeField] private BlockModel blockModell;
-    [SerializeField] private BlockModel blockModellHover;
+    [SerializeField] private GridCellModel gridCellModell;
+    [SerializeField] private GridCellModel gridCellModelHover;
 
     private GridCell gridCell;
 
@@ -42,14 +42,14 @@ public class GridCellModelController : MonoBehaviour
 
     private void OnGridCellChangeState(bool isActive)
     {
-        if (blockModell)
+        if (gridCellModell)
         {
-            blockModell.gameObject.SetActive(isActive);
+            gridCellModell.gameObject.SetActive(isActive);
         }        
     }
 
     private void OnHoverGridCell(bool isActive)
     {
-        blockModellHover.gameObject.SetActive(isActive);
+        gridCellModelHover.gameObject.SetActive(isActive);
     }
 }

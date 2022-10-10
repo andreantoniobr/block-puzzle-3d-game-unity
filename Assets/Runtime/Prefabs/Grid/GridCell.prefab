@@ -30,8 +30,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 3005605025044118017}
-  - {fileID: 8788452129586338395}
+  - {fileID: 2513871904651066499}
+  - {fileID: 4396754235650211451}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -61,6 +61,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0}
+  gridCellColor: 0
   isFull: 0
   isHover: 0
 --- !u!114 &3488482504154942232
@@ -75,9 +76,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 900aebddef1d9ac4686a380af2d466d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blockModell: {fileID: 3562412371565512099}
-  blockModellHover: {fileID: 7003357265813595641}
---- !u!1001 &381438654321825519
+  gridCellModell: {fileID: 4189798839117611809}
+  gridCellModelHover: {fileID: 2720840871143752153}
+--- !u!1001 &4735981855628571343
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -86,7 +87,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7283758330495907510, guid: a364357355054d34a988fd09cb101073, type: 3}
       propertyPath: m_Name
-      value: BlockModelIsSelected
+      value: GridCellModelSelected
       objectReference: {fileID: 0}
     - target: {fileID: 8988620572354170036, guid: a364357355054d34a988fd09cb101073, type: 3}
       propertyPath: m_RootOrder
@@ -134,15 +135,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a364357355054d34a988fd09cb101073, type: 3}
---- !u!4 &8788452129586338395 stripped
+--- !u!4 &4396754235650211451 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8988620572354170036, guid: a364357355054d34a988fd09cb101073, type: 3}
-  m_PrefabInstance: {fileID: 381438654321825519}
+  m_PrefabInstance: {fileID: 4735981855628571343}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7003357265813595641 stripped
+--- !u!114 &2720840871143752153 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7240600988259513110, guid: a364357355054d34a988fd09cb101073, type: 3}
-  m_PrefabInstance: {fileID: 381438654321825519}
+  m_PrefabInstance: {fileID: 4735981855628571343}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -150,7 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0bc1ed719a30164d82df254497cf5ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1001 &6128258976184432309
+--- !u!1001 &6800136254009634871
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -159,7 +160,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7283758330495907510, guid: 68b67d9dbacaa814c92cce75e10ae498, type: 3}
       propertyPath: m_Name
-      value: BlockModelIsFull
+      value: GridCellModelFull
       objectReference: {fileID: 0}
     - target: {fileID: 8988620572354170036, guid: 68b67d9dbacaa814c92cce75e10ae498, type: 3}
       propertyPath: m_RootOrder
@@ -207,15 +208,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 68b67d9dbacaa814c92cce75e10ae498, type: 3}
---- !u!4 &3005605025044118017 stripped
+--- !u!4 &2513871904651066499 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8988620572354170036, guid: 68b67d9dbacaa814c92cce75e10ae498, type: 3}
-  m_PrefabInstance: {fileID: 6128258976184432309}
+  m_PrefabInstance: {fileID: 6800136254009634871}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3562412371565512099 stripped
+--- !u!114 &4189798839117611809 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7240600988259513110, guid: 68b67d9dbacaa814c92cce75e10ae498, type: 3}
-  m_PrefabInstance: {fileID: 6128258976184432309}
+  m_PrefabInstance: {fileID: 6800136254009634871}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1

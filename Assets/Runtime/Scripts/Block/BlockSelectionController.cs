@@ -3,27 +3,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PartsSelectorController : MonoBehaviour
+public class BlockSelectionController : MonoBehaviour
 {
     [SerializeField] private LayerMask layerMask;
-    public static event Action<Part> PartSelectedEvent;
+    public static event Action<Block> BlockSelectedEvent;
     
     private void Update()
     {
         if (InputController.IsHolding)
         {
-            TryGetPart();
+            TryGetBlock();
         }
     }
 
-    private void TryGetPart()
+    private void TryGetBlock()
     {
         if (RaycastHelper.GetRaycast(InputController.InputPosition, layerMask, out RaycastHit raycastHit))
         {
-            Part part = raycastHit.transform.GetComponent<Part>();
-            if (part)
+            Block block = raycastHit.transform.GetComponent<Block>();
+            if (block)
             {
-                PartSelectedEvent?.Invoke(part);
+                BlockSelectedEvent?.Invoke(block);
             }
         }
     }

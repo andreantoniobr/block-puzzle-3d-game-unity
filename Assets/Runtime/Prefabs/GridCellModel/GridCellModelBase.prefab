@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 246648846193365048}
   - component: {fileID: 5317857117497631025}
   m_Layer: 0
-  m_Name: BlockModelBase
+  m_Name: GridCellModelBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
