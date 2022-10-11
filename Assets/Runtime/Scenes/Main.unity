@@ -123,53 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &245450736
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 245450738}
-  - component: {fileID: 245450737}
-  m_Layer: 0
-  m_Name: GridCellSelector
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &245450737
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 245450736}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9144743335caee64ea9b2d5b5356ac52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 64
-  gridCell: {fileID: 0}
---- !u!4 &245450738
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 245450736}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -291,7 +244,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &954215560
 GameObject:
@@ -304,6 +257,7 @@ GameObject:
   - component: {fileID: 954215561}
   - component: {fileID: 954215564}
   - component: {fileID: 954215562}
+  - component: {fileID: 954215563}
   - component: {fileID: 954215565}
   m_Layer: 0
   m_Name: GridGenerator
@@ -340,7 +294,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridBackgroundCellModel: {fileID: 7746415861374202779, guid: 9dd854871c2e32a46ac9fdad2d02de92, type: 3}
   gridCellSize: 1
-  positionZ: 0.2
+  gridCellPositionZ: 0.2
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 64
+--- !u!114 &954215563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 954215560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9144743335caee64ea9b2d5b5356ac52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   layerMask:
     serializedVersion: 2
     m_Bits: 64
@@ -373,8 +342,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16e2d34fe0064d945935e8b961757a92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gridChunkSize: {x: 3, y: 3}
   selectedGridCell: {fileID: 0}
-  gridPartData: {fileID: 11400000, guid: 6f68ec60621fa3449af41dc18dfed7a8, type: 2}
+  blockData: {fileID: 0}
+  completeGridParts: []
+  gridChunksAmount: 0
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -491,7 +463,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1153497678
 MonoBehaviour:

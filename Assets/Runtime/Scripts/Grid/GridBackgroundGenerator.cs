@@ -7,7 +7,7 @@ public class GridBackgroundGenerator : MonoBehaviour
 {
     [SerializeField] private GridBackgroundCell gridBackgroundCellModel;
     [SerializeField] private float gridCellSize = 1f;
-    [SerializeField] private float positionZ = 0;
+    [SerializeField] private float gridCellPositionZ = 0;
     [SerializeField] private LayerMask layerMask;
 
     private GridGenerator gridGenerator;
@@ -16,7 +16,7 @@ public class GridBackgroundGenerator : MonoBehaviour
     private void Awake()
     {
         gridGenerator = GetComponent<GridGenerator>();
-        SetLayerMask();
+        GetLayerMaskValue();
     }
 
     private void Start()
@@ -24,9 +24,9 @@ public class GridBackgroundGenerator : MonoBehaviour
         GenerateGrid();
     }
 
-    private void SetLayerMask()
+    private void GetLayerMaskValue()
     {
-        layerMaskValue = LayerMaskUtility.GetLayerMask(layerMask);
+        layerMaskValue = MathHelper.GetIntLayerMaskValue(layerMask);
     }
 
     private void GenerateGrid()
@@ -45,24 +45,22 @@ public class GridBackgroundGenerator : MonoBehaviour
 
     private void SetGridCellInstance(int x, int y)
     {
-        Vector3 gridCellPosition = GetGridCellPosition(x, y);
+        Vector3 gridCellPosition = MathHelper.GetGridCellPosition(x, y, gridGenerator.GridSize, gridCellSize, gridCellPositionZ);
         GridBackgroundCell gridBrackgroundCell = Instantiate(gridBackgroundCellModel, gridCellPosition, Quaternion.identity, transform);
         if (gridBrackgroundCell)
         {
-            gridBrackgroundCell.name = $"GridBrackgroundCell[{x},{y}]";            
+            gridBrackgroundCell.name = $"GridBrackgroundCell[{x},{y}]";
             gridBrackgroundCell.gameObject.layer = layerMaskValue;
-            GridCell gridCell = gridGenerator.GridCellData[x, y];
-            if (gridCell)
-            {
-                gridBrackgroundCell.GridCell = gridCell;
-            }
+            SetGriCell(x, y, gridBrackgroundCell);
         }
     }
 
-    private Vector3 GetGridCellPosition(int x, int y)
+    private void SetGriCell(int x, int y, GridBackgroundCell gridBrackgroundCell)
     {
-        float gridCellPositionX = (x - gridGenerator.GridCellPositionDecrement.x) * gridCellSize;
-        float gridCellPositionY = (y - gridGenerator.GridCellPositionDecrement.y) * gridCellSize;
-        return new Vector3(gridCellPositionX, gridCellPositionY, positionZ);
+        GridCell gridCell = gridGenerator.GridCellData[x, y];
+        if (gridCell)
+        {
+            gridBrackgroundCell.GridCell = gridCell;
+        }
     }
 }

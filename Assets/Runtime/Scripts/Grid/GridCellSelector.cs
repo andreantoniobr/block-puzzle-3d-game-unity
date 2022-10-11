@@ -6,7 +6,6 @@ using UnityEngine;
 public class GridCellSelector : MonoBehaviour
 {
     [SerializeField] private LayerMask layerMask;
-    [SerializeField] private GridCell gridCell;
 
     public static event Action<GridCell> GridCellHoverEvent;
     public static event Action<GridCell> GridCellSelectedEvent;

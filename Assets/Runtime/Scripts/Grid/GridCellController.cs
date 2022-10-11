@@ -2,47 +2,56 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public struct Block2
+[System.Serializable]
+public struct GridPart
 {
     public List<GridCell> GridCells;
 }
 
 [RequireComponent(typeof(GridGenerator))]
 public class GridCellController : MonoBehaviour
-{    
+{
+    [SerializeField] private Vector2Int gridChunkSize;
     [SerializeField] private GridCell selectedGridCell;
     [SerializeField] private BlockData blockData;
+    [SerializeField] private List<GridPart> completeGridParts = new List<GridPart>();
 
     private GridGenerator gridGenerator;
 
     private int gridSizeX;
     private int gridSizeY;
 
-    private int maxGridCellX;
-    private int maxGridCellY;
-
     private GridCell[,] gridCellData;
+    private List<GridCell> hoverGridCells = new List<GridCell>();
 
-    private List<GridCell> hoverGridCells;
+    [SerializeField] private int gridChunksAmount;
 
     private void Awake()
     {
         gridGenerator = GetComponent<GridGenerator>();
+        SetGridCellData();
+        SetGridSize();
+        SetGridChunksAmount();
+        SubscribeInEvents();
+    }
 
+    private void SetGridSize()
+    {
+        gridSizeX = gridCellData.GetLength(0);
+        gridSizeY = gridCellData.GetLength(0);
+    }
+
+    private void SetGridCellData()
+    {
         if (gridGenerator)
         {
             gridCellData = gridGenerator.GridCellData;
         }
+    }
 
-        gridSizeX = gridCellData.GetLength(0);
-        gridSizeY = gridCellData.GetLength(0);
-
-        maxGridCellX = gridSizeX - 1;
-        maxGridCellY = gridSizeY - 1;
-
-        hoverGridCells = new List<GridCell>();
-
-        SubscribeInEvents();
+    private void SetGridChunksAmount()
+    {
+        gridChunksAmount = MathHelper.GetGridsAmountInMainGrid(gridChunkSize.x, gridChunkSize.y, gridSizeX, gridSizeY);
     }
 
     private void OnDestroy()
@@ -68,7 +77,7 @@ public class GridCellController : MonoBehaviour
     {        
         if (gridCell)
         {
-            EraseHoverGridCells(hoverGridCells);
+            EraseHoverGridCells();
             if (CanGetSelectedGridCells(gridCell, out List<GridCell> gridCells))
             {
                 if (IsEmptyGridCells(gridCells))
@@ -115,14 +124,79 @@ public class GridCellController : MonoBehaviour
 
     private void CheckAllCompleteGridParts()
     {
+        completeGridParts.Clear();
+        List<GridPart> rows = GetCompleteRows();
+        List<GridPart> colls = GetCompleteColls();
+        completeGridParts.AddRange(rows);
+        completeGridParts.AddRange(colls);
+        //completeGridParts;
+        //pega rows completas
+        //pega colls completas
+        //pega chunks completos
     }
 
-    private void RemoveCompleteGridPart()
+    private List<GridPart> GetCompleteColls()
     {
+        List<GridPart> gridParts = new List<GridPart>();        
+        for (int x = 0; x < gridSizeX; x++)
+        {
+            GridPart currentGridPart = new GridPart
+            {
+                GridCells = new List<GridCell>()
+            };
+            for (int y = 0; y < gridSizeY; y++)
+            {
+                GridCell gridCell = gridCellData[x, y];
+                if (gridCell && gridCell.IsFull)
+                {
+                    currentGridPart.GridCells.Add(gridCell);
+                }
+                else
+                {
+                    currentGridPart.GridCells.Clear();
+                    break;
+                }
+            }
+            CheckIsCompleteGridPart(gridParts, currentGridPart, gridSizeX);
+        }
+        return gridParts;
+    }    
 
+    private List<GridPart> GetCompleteRows()
+    {
+        List<GridPart> gridParts = new List<GridPart>();
+        for (int y = 0; y < gridSizeY; y++)
+        {
+            GridPart currentGridPart = new GridPart
+            {
+                GridCells = new List<GridCell>()
+            };
+            for (int x = 0; x < gridSizeX; x++)
+            {
+                GridCell gridCell = gridCellData[x, y];
+                if (gridCell && gridCell.IsFull)
+                {
+                    currentGridPart.GridCells.Add(gridCell);
+                }
+                else
+                {
+                    currentGridPart.GridCells.Clear();
+                    break;
+                }
+            }
+            CheckIsCompleteGridPart(gridParts, currentGridPart, gridSizeY);
+        }
+        return gridParts;
     }
 
-    
+    private void CheckIsCompleteGridPart(List<GridPart> gridParts, GridPart gridPart, int gridPartSize)
+    {
+        int gridCellsAmount = gridPart.GridCells.Count;
+        if (gridCellsAmount > 0 && gridCellsAmount >= gridPartSize)
+        {
+            gridParts.Add(gridPart);
+        }
+    }
 
     private bool IsPlaceableBlock()
     {
@@ -175,10 +249,10 @@ public class GridCellController : MonoBehaviour
         {
             for (int i = 0; i < gridCells.Count; i++)
             {
-                GridCell currentGridCell = gridCells[i];
-                if (currentGridCell)
+                GridCell gridCell = gridCells[i];
+                if (gridCell)
                 {
-                    currentGridCell.IsFull = true;
+                    gridCell.IsFull = true;
                 }
             }
         }
@@ -190,29 +264,29 @@ public class GridCellController : MonoBehaviour
         {
             for (int i = 0; i < gridCells.Count; i++)
             {
-                GridCell currentGridCell = gridCells[i];
-                if (currentGridCell)
+                GridCell gridCell = gridCells[i];
+                if (gridCell)
                 {
-                    currentGridCell.IsHover = true;
-                    hoverGridCells.Add(currentGridCell);
+                    gridCell.IsHover = true;
+                    hoverGridCells.Add(gridCell);
                 }
             }
         }
     }
 
-    private void EraseHoverGridCells(List<GridCell> gridCells)
+    private void EraseHoverGridCells()
     {
-        if (gridCells.Count > 0)
+        if (hoverGridCells.Count > 0)
         {
-            for (int i = 0; i < gridCells.Count; i++)
+            for (int i = 0; i < hoverGridCells.Count; i++)
             {
-                GridCell currentGridCell = gridCells[i];
-                if (currentGridCell)
+                GridCell gridCell = hoverGridCells[i];
+                if (gridCell)
                 {
-                    currentGridCell.IsHover = false;
+                    gridCell.IsHover = false;
                 }
             }
-            gridCells.Clear();
+            hoverGridCells.Clear();
         }        
     }
 
@@ -234,7 +308,7 @@ public class GridCellController : MonoBehaviour
                     {
                         int gridCellX = x + startX;
                         int gridCellY = y + startY;
-                        if (IsInArrayRange(gridCellX, maxGridCellX) && IsInArrayRange(gridCellY, maxGridCellY))
+                        if (MathHelper.IsInArrayRange(gridCellX, gridSizeX) && MathHelper.IsInArrayRange(gridCellY, gridSizeY))
                         {
                             gridCells.Add(gridCellData[gridCellX, gridCellY]);
                         }
@@ -253,10 +327,5 @@ public class GridCellController : MonoBehaviour
     private bool IsFullBlockCell(int x, int y)
     {
         return blockData.BlockCells[x + y * BlockDataConstants.RowsAmount];
-    }
-
-    private bool IsInArrayRange(int index, int maxIndexInRange)
-    {
-        return index >= 0 && index <= maxIndexInRange;
-    }
+    }    
 }

@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 614e0c6af14f5ca4a8270ef5b9f6404a, type: 3}
   m_Name: BlockData 2
   m_EditorClassIdentifier: 
-  blockCells: 000000000000000000
+  blockCells: 000100010101000100
