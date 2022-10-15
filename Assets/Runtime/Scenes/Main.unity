@@ -259,6 +259,7 @@ GameObject:
   - component: {fileID: 954215562}
   - component: {fileID: 954215563}
   - component: {fileID: 954215565}
+  - component: {fileID: 954215566}
   m_Layer: 0
   m_Name: GridGenerator
   m_TagString: Untagged
@@ -328,8 +329,7 @@ MonoBehaviour:
   gridSize: {x: 9, y: 9}
   gridCellModel: {fileID: 2429081234523678419, guid: 6b7a60cf3c332f3499745e178a56404a, type: 3}
   gridCellSize: 1
-  positionZ: 0
-  gridCellPositionDecrement: {x: 0, y: 0}
+  gridCellPositionZ: 0
 --- !u!114 &954215565
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -345,6 +345,18 @@ MonoBehaviour:
   gridChunkSize: {x: 3, y: 3}
   selectedGridCell: {fileID: 0}
   blockData: {fileID: 0}
+--- !u!114 &954215566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 954215560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a268cc263fda3345a11fb335e3feffb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   completeGridParts: []
   gridChunksAmount: 0
 --- !u!1 &963194225

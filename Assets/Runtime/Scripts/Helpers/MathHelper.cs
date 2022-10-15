@@ -4,10 +4,15 @@ public class MathHelper : MonoBehaviour
 {
     public static int GetGridsAmountInMainGrid(int gridX, int gridY, int mainGridX, int mainGridY)
     {
+        return GetGridsAmountInSideOfMainGrid(gridX, mainGridX) * GetGridsAmountInSideOfMainGrid(gridY, mainGridY);
+    }
+
+    public static int GetGridsAmountInSideOfMainGrid(int gridSize, int mainGridSize)
+    {
         int gridsAmount = 0;
-        if (IsIntDivisible(mainGridX, gridX) && IsIntDivisible(mainGridY, gridY))
+        if (IsIntDivisible(mainGridSize, gridSize))
         {
-            gridsAmount = mainGridX / gridX * mainGridY / gridY;
+            gridsAmount = mainGridSize / gridSize;
         }
         return gridsAmount;
     }

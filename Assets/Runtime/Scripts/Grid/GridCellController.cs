@@ -2,37 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public struct GridPart
-{
-    public List<GridCell> GridCells;
-}
-
 [RequireComponent(typeof(GridGenerator))]
+[RequireComponent(typeof(GridPartsController))]
 public class GridCellController : MonoBehaviour
 {
     [SerializeField] private Vector2Int gridChunkSize;
     [SerializeField] private GridCell selectedGridCell;
     [SerializeField] private BlockData blockData;
-    [SerializeField] private List<GridPart> completeGridParts = new List<GridPart>();
-
-    private GridGenerator gridGenerator;
-
+    
     private int gridSizeX;
     private int gridSizeY;
-
     private GridCell[,] gridCellData;
-    private List<GridCell> hoverGridCells = new List<GridCell>();
-
-    [SerializeField] private int gridChunksAmount;
+    private GridGenerator gridGenerator;
+    private GridPartsController gridPartsController;
+    private List<GridCell> hoverGridCells = new List<GridCell>();    
 
     private void Awake()
     {
         gridGenerator = GetComponent<GridGenerator>();
+        gridPartsController = GetComponent<GridPartsController>();
+        SubscribeInEvents();
+    }
+
+    private void Start()
+    {        
         SetGridCellData();
         SetGridSize();
-        SetGridChunksAmount();
-        SubscribeInEvents();
     }
 
     private void SetGridSize()
@@ -47,12 +42,7 @@ public class GridCellController : MonoBehaviour
         {
             gridCellData = gridGenerator.GridCellData;
         }
-    }
-
-    private void SetGridChunksAmount()
-    {
-        gridChunksAmount = MathHelper.GetGridsAmountInMainGrid(gridChunkSize.x, gridChunkSize.y, gridSizeX, gridSizeY);
-    }
+    }    
 
     private void OnDestroy()
     {
@@ -117,86 +107,22 @@ public class GridCellController : MonoBehaviour
         }
     }
 
-    private void PlaceBlock(List<GridCell> gridCells)
-    {
-        SetFullGridCells(gridCells);
-    }
-
     private void CheckAllCompleteGridParts()
     {
-        completeGridParts.Clear();
-        List<GridPart> rows = GetCompleteRows();
-        List<GridPart> colls = GetCompleteColls();
-        completeGridParts.AddRange(rows);
-        completeGridParts.AddRange(colls);
+        if (gridPartsController)
+        {
+            gridPartsController.GetCompleteGridParts(gridChunkSize.x, gridChunkSize.y);
+        }
         //completeGridParts;
         //pega rows completas
         //pega colls completas
         //pega chunks completos
     }
 
-    private List<GridPart> GetCompleteColls()
+    private void PlaceBlock(List<GridCell> gridCells)
     {
-        List<GridPart> gridParts = new List<GridPart>();        
-        for (int x = 0; x < gridSizeX; x++)
-        {
-            GridPart currentGridPart = new GridPart
-            {
-                GridCells = new List<GridCell>()
-            };
-            for (int y = 0; y < gridSizeY; y++)
-            {
-                GridCell gridCell = gridCellData[x, y];
-                if (gridCell && gridCell.IsFull)
-                {
-                    currentGridPart.GridCells.Add(gridCell);
-                }
-                else
-                {
-                    currentGridPart.GridCells.Clear();
-                    break;
-                }
-            }
-            CheckIsCompleteGridPart(gridParts, currentGridPart, gridSizeX);
-        }
-        return gridParts;
+        SetFullGridCells(gridCells);
     }    
-
-    private List<GridPart> GetCompleteRows()
-    {
-        List<GridPart> gridParts = new List<GridPart>();
-        for (int y = 0; y < gridSizeY; y++)
-        {
-            GridPart currentGridPart = new GridPart
-            {
-                GridCells = new List<GridCell>()
-            };
-            for (int x = 0; x < gridSizeX; x++)
-            {
-                GridCell gridCell = gridCellData[x, y];
-                if (gridCell && gridCell.IsFull)
-                {
-                    currentGridPart.GridCells.Add(gridCell);
-                }
-                else
-                {
-                    currentGridPart.GridCells.Clear();
-                    break;
-                }
-            }
-            CheckIsCompleteGridPart(gridParts, currentGridPart, gridSizeY);
-        }
-        return gridParts;
-    }
-
-    private void CheckIsCompleteGridPart(List<GridPart> gridParts, GridPart gridPart, int gridPartSize)
-    {
-        int gridCellsAmount = gridPart.GridCells.Count;
-        if (gridCellsAmount > 0 && gridCellsAmount >= gridPartSize)
-        {
-            gridParts.Add(gridPart);
-        }
-    }
 
     private bool IsPlaceableBlock()
     {
