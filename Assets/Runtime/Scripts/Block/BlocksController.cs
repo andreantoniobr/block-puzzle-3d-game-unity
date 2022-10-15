@@ -13,17 +13,20 @@ public class BlocksController : MonoBehaviour
     private BlockSpawnController blockSpawnController;
 
     public static event Action<List<Block>> AvaliableBlocksEvent;
+    
     public static event Action<Block> SelectedMainBlockEvent;
+    public static event Action<Block> RemoveMainBlockEvent;
 
     private void Awake()
     {
         blockSpawnController = GetComponent<BlockSpawnController>();
-        BlockSelectionController.BlockSelectedEvent += OnBlockSelectedEvent;
+        BlockSelectionController.BlockSelectedEvent += OnBlockSelected;
+        GridCellController.PlacedBlockEvent += OnPlacedBlock;
     }
 
     private void OnDestroy()
     {
-        BlockSelectionController.BlockSelectedEvent -= OnBlockSelectedEvent;
+        BlockSelectionController.BlockSelectedEvent -= OnBlockSelected;
     }
 
     private void Start()
@@ -34,12 +37,39 @@ public class BlocksController : MonoBehaviour
             GetAvaliableBlocks();                       
         }                
     }    
-    private void OnBlockSelectedEvent(Block block)
+    private void OnBlockSelected(Block block)
     {
         if (selectedMainBlock != block)
         {
             selectedMainBlock = block;
             SelectedMainBlockEvent?.Invoke(block);
+        }
+    }
+
+    private void OnPlacedBlock()
+    {
+        RemoveSelectedMainBlock();
+        ReplaceAvaliableBlocks();
+    }
+
+    private void ReplaceAvaliableBlocks()
+    {
+        if (avaliableBlocks.Count <= 0)
+        {
+            GetAvaliableBlocks();
+        }
+    }
+
+    private void RemoveSelectedMainBlock()
+    {
+        if (selectedMainBlock)
+        {
+            RemoveMainBlockEvent?.Invoke(selectedMainBlock);
+            if (avaliableBlocks.Contains(selectedMainBlock))
+            {
+                avaliableBlocks.Remove(selectedMainBlock);
+            }
+            selectedMainBlock = null;
         }
     }
 

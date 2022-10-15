@@ -358,7 +358,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   completeGridParts: []
-  gridChunksAmount: 0
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -505,11 +504,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blocksPositions:
-  - Position: {x: -3, y: 7, z: 0}
+  - Position: {x: -4, y: -8, z: 0}
     IsFull: 0
-  - Position: {x: 0, y: 7, z: 0}
+  - Position: {x: 0, y: -8, z: 0}
     IsFull: 0
-  - Position: {x: 3, y: 7, z: 0}
+  - Position: {x: 4, y: -8, z: 0}
     IsFull: 0
 --- !u!114 &1153497680
 MonoBehaviour:
@@ -549,10 +548,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7930dc6ecb5d21648aabb9a19fc9586e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blockModel: {fileID: 725367014591624844, guid: 841e6769f687dbb4498c3df8eb0b23c4, type: 3}
+  block: {fileID: 725367014591624844, guid: 841e6769f687dbb4498c3df8eb0b23c4, type: 3}
   blockDatas:
+  - {fileID: 11400000, guid: b169fef4677efbf489d90f2063b18fc4, type: 2}
   - {fileID: 11400000, guid: 3c9c7bfb02652fb4cb405258f219a890, type: 2}
   - {fileID: 11400000, guid: d09ad8448b051ae4fb4dde8760dc7280, type: 2}
   - {fileID: 11400000, guid: 6716cf9949d53f44b87dee36a3ec4c29, type: 2}
-  - {fileID: 11400000, guid: b169fef4677efbf489d90f2063b18fc4, type: 2}
   spawnedBlocks: []
+  blockSize: 1
+  blockPositionZ: 0

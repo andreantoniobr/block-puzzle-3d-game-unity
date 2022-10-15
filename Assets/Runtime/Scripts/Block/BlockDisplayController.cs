@@ -8,15 +8,22 @@ public class BlockDisplayController : MonoBehaviour
     {
         BlockSpawnController.SpawnBlockEvent += OnSpawnBlock;
         BlocksController.AvaliableBlocksEvent += OnAvaliableBlocks;
+        BlocksController.RemoveMainBlockEvent += OnHideBlock;
     }
 
     private void OnDestroy()
     {
         BlockSpawnController.SpawnBlockEvent -= OnSpawnBlock;
         BlocksController.AvaliableBlocksEvent -= OnAvaliableBlocks;
+        BlocksController.RemoveMainBlockEvent -= OnHideBlock;
     }
 
     private void OnSpawnBlock(Block block)
+    {
+        HideBlock(block);
+    }
+
+    private void OnHideBlock(Block block)
     {
         HideBlock(block);
     }

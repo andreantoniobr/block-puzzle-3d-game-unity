@@ -6,7 +6,6 @@ using UnityEngine;
 public class GridPartsController : MonoBehaviour
 {
     [SerializeField] private List<GridPart> completeGridParts = new List<GridPart>();
-    [SerializeField] private int gridChunksAmount;
 
     private int gridSizeX;
     private int gridSizeY;
@@ -22,7 +21,6 @@ public class GridPartsController : MonoBehaviour
     {        
         SetGridCellData();
         SetGridSize();
-        SetGridChunksAmount();
     }
 
     private void SetGridSize()
@@ -39,25 +37,16 @@ public class GridPartsController : MonoBehaviour
         }
     }
 
-    private void SetGridChunksAmount()
-    {
-        //gridChunksAmount = MathHelper.GetGridsAmountInMainGrid(gridChunkSize.x, gridChunkSize.y, gridSizeX, gridSizeY);
-    }
-
-    public void GetCompleteGridParts(int chunkSizeX, int chunkSizeY)
+    public List<GridPart> GetCompleteGridParts(int chunkSizeX, int chunkSizeY)
     {
         completeGridParts.Clear();
         List<GridPart> rows = GetCompleteRows();
         List<GridPart> colls = GetCompleteColls();
         List<GridPart> chunks = GetCompleteChunks(chunkSizeX, chunkSizeY);
-
         completeGridParts.AddRange(rows);
         completeGridParts.AddRange(colls);
         completeGridParts.AddRange(chunks);
-        //completeGridParts;
-        //pega rows completas
-        //pega colls completas
-        //pega chunks completos
+        return completeGridParts;
     }
 
     private List<GridPart> GetCompleteChunks(int chunkSizeX, int chunkSizeY)
@@ -82,7 +71,6 @@ public class GridPartsController : MonoBehaviour
         }        
         return gridParts;
     }
-
     
     private GridPart GetChunk(int chunkX, int chunkY, int chunkSizeX, int chunkSizeY)
     {

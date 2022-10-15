@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,7 +16,9 @@ public class GridCellController : MonoBehaviour
     private GridCell[,] gridCellData;
     private GridGenerator gridGenerator;
     private GridPartsController gridPartsController;
-    private List<GridCell> hoverGridCells = new List<GridCell>();    
+    private List<GridCell> hoverGridCells = new List<GridCell>();   
+    
+    public static event Action PlacedBlockEvent;
 
     private void Awake()
     {
@@ -54,6 +57,7 @@ public class GridCellController : MonoBehaviour
         GridCellSelector.GridCellHoverEvent += OnHoverGridCell;
         GridCellSelector.GridCellSelectedEvent += OnSelectGridCell;
         BlocksController.SelectedMainBlockEvent += OnSelectedMainBlock;
+        BlocksController.RemoveMainBlockEvent += OnRemovedMainBlock;
     }
 
     private void UnsubscribeInEvents()
@@ -61,6 +65,7 @@ public class GridCellController : MonoBehaviour
         GridCellSelector.GridCellHoverEvent -= OnHoverGridCell;
         GridCellSelector.GridCellSelectedEvent -= OnSelectGridCell;
         BlocksController.SelectedMainBlockEvent -= OnSelectedMainBlock;
+        BlocksController.RemoveMainBlockEvent -= OnRemovedMainBlock;
     }
 
     private void OnHoverGridCell(GridCell gridCell)
@@ -95,6 +100,11 @@ public class GridCellController : MonoBehaviour
         }        
     }
 
+    private void OnRemovedMainBlock(Block block)
+    {
+        blockData = null;
+    }
+
     private void TryPlaceBlock()
     {
         if (selectedGridCell && CanGetSelectedGridCells(selectedGridCell, out List<GridCell> gridCells))
@@ -102,7 +112,8 @@ public class GridCellController : MonoBehaviour
             if (IsEmptyGridCells(gridCells))
             {
                 PlaceBlock(gridCells);
-                CheckAllCompleteGridParts();
+                PlacedBlockEvent?.Invoke();
+                RemoveAllCompleteGridPartsParts();
             }
         }
     }
@@ -111,7 +122,7 @@ public class GridCellController : MonoBehaviour
     {
         if (gridPartsController)
         {
-            gridPartsController.GetCompleteGridParts(gridChunkSize.x, gridChunkSize.y);
+            List<GridPart> completeGridParts = gridPartsController.GetCompleteGridParts(gridChunkSize.x, gridChunkSize.y);
         }
         //completeGridParts;
         //pega rows completas
@@ -119,9 +130,26 @@ public class GridCellController : MonoBehaviour
         //pega chunks completos
     }
 
+    private void RemoveAllCompleteGridPartsParts()
+    {
+        List<GridPart> gridParts = gridPartsController.GetCompleteGridParts(gridChunkSize.x, gridChunkSize.y);
+        int gridPartsAmount = gridParts.Count;
+        if (gridPartsAmount > 0)
+        {
+            for (int i = 0; i < gridPartsAmount; i++)
+            {
+                GridPart gridPart = gridParts[i];
+                if (gridPart != null && gridPart.GridCells.Count > 0)
+                {
+                    SetFullGridCells(gridPart.GridCells, false);
+                }
+            }
+        }
+    }
+
     private void PlaceBlock(List<GridCell> gridCells)
     {
-        SetFullGridCells(gridCells);
+        SetFullGridCells(gridCells, true);
     }    
 
     private bool IsPlaceableBlock()
@@ -169,7 +197,7 @@ public class GridCellController : MonoBehaviour
         return isEmptyGridCells;
     }
 
-    private void SetFullGridCells(List<GridCell> gridCells)
+    private void SetFullGridCells(List<GridCell> gridCells, bool isFull)
     {
         if (gridCells.Count > 0)
         {
@@ -178,7 +206,7 @@ public class GridCellController : MonoBehaviour
                 GridCell gridCell = gridCells[i];
                 if (gridCell)
                 {
-                    gridCell.IsFull = true;
+                    gridCell.IsFull = isFull;
                 }
             }
         }
@@ -230,7 +258,7 @@ public class GridCellController : MonoBehaviour
             {
                 for (int y = 0; y < blockCollsAmount; y++)
                 {
-                    if (IsFullBlockCell(x, y))
+                    if (BlockDataHelper.IsFullBlockCell(x, y, blockData))
                     {
                         int gridCellX = x + startX;
                         int gridCellY = y + startY;
@@ -248,10 +276,5 @@ public class GridCellController : MonoBehaviour
             }
         }
         return canGetSelectedGridCells;
-    }
-
-    private bool IsFullBlockCell(int x, int y)
-    {
-        return blockData.BlockCells[x + y * BlockDataConstants.RowsAmount];
-    }    
+    }  
 }

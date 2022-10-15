@@ -5,17 +5,15 @@ using UnityEngine;
 
 public class BlockSpawnController : MonoBehaviour
 {
-    [SerializeField] private Block blockModel;
+    [SerializeField] private Block block;
     [SerializeField] private BlockData[] blockDatas;
     [SerializeField] List<Block> spawnedBlocks;
+    
+    [SerializeField] private float blockSize;
+    [SerializeField] private float blockPositionZ;
 
     public List<Block> SpawnedBlocks => spawnedBlocks;
     public static event Action<Block> SpawnBlockEvent;
-
-    private void Start()
-    {
-        SpawnAllBlocks();
-    }
 
     public void SpawnAllBlocks()
     {
@@ -27,23 +25,24 @@ public class BlockSpawnController : MonoBehaviour
                 if (block)
                 {
                     spawnedBlocks.Add(block);
+                    block.GenerateBlockModel(blockSize, blockPositionZ);
                     SpawnBlockEvent?.Invoke(block);                    
                 }
             }
         }
-    }    
+    }
 
     private Block GetBlock(BlockData blockData)
     {
-        Block block = null;
-        if (blockData)
+        Block currentBlock = null;
+        if (blockData && block)
         {
-            block = Instantiate(blockModel, transform);
-            if (block)
+            currentBlock = Instantiate(block, transform);
+            if (currentBlock)
             {
-                block.BlockData = blockData;
+                currentBlock.BlockData = blockData;
             }
         }
-        return block;
+        return currentBlock;
     }
 }

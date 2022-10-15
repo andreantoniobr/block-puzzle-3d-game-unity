@@ -25,10 +25,27 @@ public class BlockPositionController : MonoBehaviour
 
     private void OnAvaliableBlocks(List<Block> avaliableBlock)
     {
-        SetAvaliableBlocksPositions(avaliableBlock);
+        SetAllVaganciesPositions();
+        SetBlocksPositions(avaliableBlock);
     }
 
-    private void SetAvaliableBlocksPositions(List<Block> avaliableBlocks)
+    private void SetAllVaganciesPositions()
+    {
+        int blocksPositionsAmount = blocksPositions.Length;
+        if (blocksPositionsAmount > 0)
+        {
+            for (int i = 0; i < blocksPositionsAmount; i++)
+            {                
+                if (MathHelper.IsInArrayRange(i, blocksPositionsAmount))
+                {
+                    blocksPositions[i].IsFull = false;
+                }                
+            }            
+        }
+    }
+    
+
+    private void SetBlocksPositions(List<Block> avaliableBlocks)
     {
         for (int i = 0; i < avaliableBlocks.Count; i++)
         {
