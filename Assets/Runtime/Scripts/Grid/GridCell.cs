@@ -4,12 +4,13 @@ using UnityEngine;
 public class GridCell : MonoBehaviour
 {
     [SerializeField] private Vector2Int position;
-    [SerializeField] private GridCellColor gridCellColor;
+    [SerializeField] private BlockColor color;
     [SerializeField] private bool isFull;
     [SerializeField] private bool isHover;
 
     public event Action<bool> GridCellChangeEvent;
     public event Action<bool> GridCellHoverEvent;
+    public event Action<BlockColor> GridCellColorChangeEvent;
 
     public Vector2Int Position
     {
@@ -17,10 +18,14 @@ public class GridCell : MonoBehaviour
         set => position = value;
     }
 
-    public GridCellColor GridCellColor
+    public BlockColor Color
     {
-        get => gridCellColor;
-        set => gridCellColor = value;
+        get => color;
+        set
+        {
+            color = value;
+            GridCellColorChangeEvent?.Invoke(color);
+        }
     }
 
     public bool IsFull

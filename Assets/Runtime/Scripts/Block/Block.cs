@@ -6,11 +6,18 @@ public class Block : MonoBehaviour
 {
     [SerializeField] private BlockData blockData;
     [SerializeField] private BlockModel blockModel;
+    [SerializeField] private BlockColor color;
 
     public BlockData BlockData
     {
         get => blockData;
         set => blockData = value;
+    }
+
+    public BlockColor Color
+    {
+        get => color;
+        set => color = value;
     }
 
     public void GenerateBlockModel(float blockSize, float blockPositionZ)

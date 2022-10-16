@@ -1,5 +1,8 @@
-public enum GridCellColor
+using System.Collections.Generic;
+
+public enum BlockColor
 {
+    Default = -1,
     Yellow,
     Red,
     Green,

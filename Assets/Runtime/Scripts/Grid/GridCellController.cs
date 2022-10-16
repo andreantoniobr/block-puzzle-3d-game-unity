@@ -10,7 +10,8 @@ public class GridCellController : MonoBehaviour
     [SerializeField] private Vector2Int gridChunkSize;
     [SerializeField] private GridCell selectedGridCell;
     [SerializeField] private BlockData blockData;
-    
+    [SerializeField] private Block selectedMainBlock;
+
     private int gridSizeX;
     private int gridSizeY;
     private GridCell[,] gridCellData;
@@ -81,7 +82,7 @@ public class GridCellController : MonoBehaviour
                 }
             }
         }
-    }
+    }    
 
     private void OnSelectGridCell(GridCell gridCell)
     {
@@ -97,19 +98,21 @@ public class GridCellController : MonoBehaviour
         if (block)
         {
             blockData = block.BlockData;
+            selectedMainBlock = block;
         }        
     }
 
     private void OnRemovedMainBlock(Block block)
     {
         blockData = null;
+        selectedMainBlock = null;
     }
 
     private void TryPlaceBlock()
     {
         if (selectedGridCell && CanGetSelectedGridCells(selectedGridCell, out List<GridCell> gridCells))
         {
-            if (IsEmptyGridCells(gridCells))
+            if (IsEmptyGridCells(gridCells) && CanPlaceGridCellsByCollor(gridCells))
             {
                 PlaceBlock(gridCells);
                 PlacedBlockEvent?.Invoke();
@@ -150,6 +153,7 @@ public class GridCellController : MonoBehaviour
     private void PlaceBlock(List<GridCell> gridCells)
     {
         SetFullGridCells(gridCells, true);
+        SetColorGridCells(gridCells);
     }    
 
     private bool IsPlaceableBlock()
@@ -248,7 +252,7 @@ public class GridCellController : MonoBehaviour
     {
         bool canGetSelectedGridCells = true;
         gridCells = new List<GridCell>();
-        if (selectedGridCell && blockData && gridCellData.Length > 0)
+        if (selectedGridCell && BlockDataHelper.ExistBlockData(blockData) && gridCellData.Length > 0)
         {
             int blockRowsAmount = BlockDataConstants.RowsAmount;
             int blockCollsAmount = BlockDataConstants.CollsAmount;
@@ -276,5 +280,54 @@ public class GridCellController : MonoBehaviour
             }
         }
         return canGetSelectedGridCells;
-    }  
+    }
+
+    private bool CanPlaceGridCellsByCollor(List<GridCell> gridCells)
+    {
+        bool canPlaceGridCellsByCollor = true;
+        int gridCellsAmount = gridCells.Count;
+        if (gridCellsAmount > 0)
+        {
+            for (int i = 0; i < gridCellsAmount; i++)
+            {
+                GridCell gridCell = gridCells[i];
+                if (!IsPlaceableGridCellColor(gridCell))
+                {
+                    canPlaceGridCellsByCollor = false;
+                    break;
+                }
+            }
+        }
+        return canPlaceGridCellsByCollor;
+    }
+
+    private bool IsPlaceableGridCellColor(GridCell gridCell)
+    {
+        bool isGridCellValidColor = false;
+        if (gridCell && selectedMainBlock)
+        {
+            if (gridCell.Color == BlockColor.Default ||
+                gridCell.Color == selectedMainBlock.Color)
+            {
+                isGridCellValidColor = true;
+            }
+        }
+        return isGridCellValidColor;
+    }
+
+    private void SetColorGridCells(List<GridCell> gridCells)
+    {
+        int gridCellsAmount = gridCells.Count;
+        if (gridCellsAmount > 0 && selectedMainBlock)
+        {
+            for (int i = 0; i < gridCellsAmount; i++)
+            {
+                GridCell gridCell = gridCells[i];
+                if (gridCell)
+                {
+                    gridCell.Color = selectedMainBlock.Color;
+                }
+            }
+        }
+    }
 }
