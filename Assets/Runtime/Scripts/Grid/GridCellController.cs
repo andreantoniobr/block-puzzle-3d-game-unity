@@ -86,7 +86,7 @@ public class GridCellController : MonoBehaviour
 
     private void OnSelectGridCell(GridCell gridCell)
     {
-        if (gridCell && selectedGridCell != gridCell)
+        if (gridCell)
         {
             selectedGridCell = gridCell;
             TryPlaceBlock();
@@ -110,11 +110,13 @@ public class GridCellController : MonoBehaviour
 
     private void TryPlaceBlock()
     {
-        if (selectedGridCell && CanGetSelectedGridCells(selectedGridCell, out List<GridCell> gridCells))
+        if (selectedMainBlock && selectedGridCell && CanGetSelectedGridCells(selectedGridCell, out List<GridCell> gridCells))
         {
+            Debug.Log("Empty " + IsEmptyGridCells(gridCells));
+            Debug.Log("Collor " + CanPlaceGridCellsByCollor(gridCells));
             if (IsEmptyGridCells(gridCells) || CanPlaceGridCellsByCollor(gridCells))
             {
-                PlaceBlock(gridCells);
+                PlaceBlock(gridCells, selectedMainBlock.BlockColor);
                 PlacedBlockEvent?.Invoke();
                 RemoveAllCompleteGridPartsParts();
             }
@@ -144,16 +146,17 @@ public class GridCellController : MonoBehaviour
                 GridPart gridPart = gridParts[i];
                 if (gridPart != null && gridPart.GridCells.Count > 0)
                 {
-                    SetFullGridCells(gridPart.GridCells, false);
+                    SetEmptyGridCells(gridPart.GridCells);
+                    RemoveColorGridCells(gridPart.GridCells);
                 }
             }
         }
     }
 
-    private void PlaceBlock(List<GridCell> gridCells)
+    private void PlaceBlock(List<GridCell> gridCells, BlockColor blockColor)
     {
         SetFullGridCells(gridCells, true);
-        SetColorGridCells(gridCells);
+        SetColorGridCells(gridCells, blockColor);
     }    
 
     private bool IsPlaceableBlock()
@@ -214,6 +217,11 @@ public class GridCellController : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void SetEmptyGridCells(List<GridCell> gridCells)
+    {
+        SetFullGridCells(gridCells, false);
     }
 
     private void SetHoverGridCells(List<GridCell> gridCells)
@@ -315,19 +323,24 @@ public class GridCellController : MonoBehaviour
         return isGridCellValidColor;
     }
 
-    private void SetColorGridCells(List<GridCell> gridCells)
+    private void SetColorGridCells(List<GridCell> gridCells, BlockColor blockColor)
     {
         int gridCellsAmount = gridCells.Count;
-        if (gridCellsAmount > 0 && selectedMainBlock)
+        if (gridCellsAmount > 0)
         {
             for (int i = 0; i < gridCellsAmount; i++)
             {
                 GridCell gridCell = gridCells[i];
                 if (gridCell)
                 {
-                    gridCell.Color = selectedMainBlock.BlockColor;
+                    gridCell.Color = blockColor;
                 }
             }
         }
+    }
+
+    private void RemoveColorGridCells(List<GridCell> gridCells)
+    {
+        SetColorGridCells(gridCells, BlockColor.Default);
     }
 }
