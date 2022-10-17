@@ -13,11 +13,15 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 45c31f510f56c3f4c84ed5d984eadb3a, type: 2}
     - target: {fileID: 5233747363007718545, guid: 062dc9b4a04143741b963e615086e741, type: 3}
       propertyPath: m_Name
-      value: BlockModelIsSelected
+      value: GridCellModelSelected
       objectReference: {fileID: 0}
     - target: {fileID: 5839730737569734291, guid: 062dc9b4a04143741b963e615086e741, type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5839730737569734291, guid: 062dc9b4a04143741b963e615086e741, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 5839730737569734291, guid: 062dc9b4a04143741b963e615086e741, type: 3}
       propertyPath: m_LocalPosition.x

@@ -76,7 +76,7 @@ public class GridCellController : MonoBehaviour
             EraseHoverGridCells();
             if (CanGetSelectedGridCells(gridCell, out List<GridCell> gridCells))
             {
-                if (IsEmptyGridCells(gridCells))
+                if (CanPlaceBlock(gridCells))
                 {                    
                     SetHoverGridCells(gridCells);
                 }
@@ -112,15 +112,20 @@ public class GridCellController : MonoBehaviour
     {
         if (selectedMainBlock && selectedGridCell && CanGetSelectedGridCells(selectedGridCell, out List<GridCell> gridCells))
         {
-            Debug.Log("Empty " + IsEmptyGridCells(gridCells));
-            Debug.Log("Collor " + CanPlaceGridCellsByCollor(gridCells));
-            if (IsEmptyGridCells(gridCells) || CanPlaceGridCellsByCollor(gridCells))
+            //Debug.Log("Empty " + IsEmptyGridCells(gridCells));
+            //Debug.Log("Collor " + CanPlaceGridCellsByCollor(gridCells));
+            if (CanPlaceBlock(gridCells))
             {
                 PlaceBlock(gridCells, selectedMainBlock.BlockColor);
                 PlacedBlockEvent?.Invoke();
                 RemoveAllCompleteGridPartsParts();
             }
         }
+    }
+
+    private bool CanPlaceBlock(List<GridCell> gridCells)
+    {
+        return IsEmptyGridCells(gridCells) || CanPlaceGridCellsByCollor(gridCells);
     }
 
     private void CheckAllCompleteGridParts()
