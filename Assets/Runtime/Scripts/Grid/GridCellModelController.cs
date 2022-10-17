@@ -28,6 +28,7 @@ public class GridCellModelController : MonoBehaviour
         {
             gridCell.GridCellChangeEvent += OnGridCellChangeState;
             gridCell.GridCellHoverEvent += OnHoverGridCell;
+            gridCell.GridCellColorChangeEvent += OnGridCellColorChangeEvent;
         }
     }
 
@@ -36,20 +37,42 @@ public class GridCellModelController : MonoBehaviour
         if (gridCell)
         {
             gridCell.GridCellChangeEvent -= OnGridCellChangeState;
-            gridCell.GridCellHoverEvent += OnHoverGridCell;
+            gridCell.GridCellHoverEvent -= OnHoverGridCell;
+            gridCell.GridCellColorChangeEvent -= OnGridCellColorChangeEvent;
         }
     }
 
     private void OnGridCellChangeState(bool isActive)
     {
-        if (gridCellModell)
-        {
-            gridCellModell.gameObject.SetActive(isActive);
-        }        
+        SetGridCellModelActive(isActive);
     }
 
     private void OnHoverGridCell(bool isActive)
+    {        
+        SetGridCellModelhover(isActive);
+    }
+
+    private void OnGridCellColorChangeEvent(BlockColor blockColor)
     {
-        gridCellModelHover.gameObject.SetActive(isActive);
+        if (gridCellModell)
+        {
+            gridCellModell.SetMaterial(blockColor);
+        }
+    }
+
+    private void SetGridCellModelActive(bool isActive)
+    {
+        if (gridCellModell)
+        {
+            gridCellModell.gameObject.SetActive(isActive);
+        }
+    }
+
+    private void SetGridCellModelhover(bool isActive)
+    {
+        if (gridCellModelHover)
+        {
+            gridCellModelHover.gameObject.SetActive(isActive);
+        }
     }
 }

@@ -85,7 +85,7 @@ public class BlocksController : MonoBehaviour
                 {
                     if (NotContains(block, avaliableBlocks))
                     {
-                        block.Color = ColorHelper.RandomColor;
+                        block.BlockColor = ColorHelper.RandomColor;
                         avaliableBlocks.Add(block);
                         selectedBlocksAmount++;
                     }

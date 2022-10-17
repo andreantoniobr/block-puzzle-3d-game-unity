@@ -15,6 +15,118 @@ PrefabInstance:
       propertyPath: m_Name
       value: GridCellModelFull
       objectReference: {fileID: 0}
+    - target: {fileID: 5317857117497631025, guid: 062dc9b4a04143741b963e615086e741, type: 3}
+      propertyPath: blockMaterials.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5317857117497631025, guid: 062dc9b4a04143741b963e615086e741, type: 3}
+      propertyPath: gridCellModelMaterials.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5317857117497631025, guid: 062dc9b4a04143741b963e615086e741, type: 3}
+      propertyPath: blockMaterials.Array.data[0].Material
+      value: 
+      objectReference: {fileID: 2100000, guid: 2843dcdf92106f249a7252fee50eb532, type: 2}
+    - target: {fileID: 5317857117497631025, guid: 062dc9b4a04143741b963e615086e741, type: 3}
+      propertyPath: blockMaterials.Array.data[1].Material
+      value: 
+      objectReference: {fileID: 2100000, guid: 9954a4c082df73c4ebcefc338ec97315, type: 2}
+    - target: {fileID: 5317857117497631025, guid: 062dc9b4a04143741b963e615086e741, type: 3}
+      propertyPath: blockMaterials.Array.data[2].Material
+      value: 
+      objectReference: {fileID: 2100000, guid: f51af089583522f4fb04a78d5d78ccec, type: 2}
+    - target: {fileID: 5317857117497631025, guid: 062dc9b4a04143741b963e615086e741, type: 3}
+      propertyPath: blockMaterials.Array.data[3].Material
+      value: 
+      objectReference: {fileID: 2100000, guid: b8c38fd9e40eacf4a9a0af3a1420b8b2, type: 2}
+    - target: {fileID: 5317857117497631025, guid: 062dc9b4a04143741b963e615086e741, type: 3}
+      propertyPath: blockMaterials.Array.data[4].Material
+      value: 
+      objectReference: {fileID: 2100000, guid: a2defc2578c562f4aa1109dd561d9ea6, type: 2}
+    - target: {fileID: 5317857117497631025, guid: 062dc9b4a04143741b963e615086e741, type: 3}
+      propertyPath: blockMaterials.Array.data[5].Material
+      value: 
+      objectReference: {fileID: 2100000, guid: c351f37aaba8da5469bfbffc5a7d4bb6, type: 2}
+    - target: {fileID: 5317857117497631025, guid: 062dc9b4a04143741b963e615086e741, type: 3}
+      propertyPath: blockMaterials.Array.data[6].Material
+      value: 
+      objectReference: {fileID: 2100000, guid: 47feef00ad9d2ed45a9b5a69e3ab98d7, type: 2}
+    - target: {fileID: 5317857117497631025, guid: 062dc9b4a04143741b963e615086e741, type: 3}
+      propertyPath: blockMaterials.Array.data[1].BlockColor
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5317857117497631025, guid: 062dc9b4a04143741b963e615086e741, type: 3}
+      propertyPath: blockMaterials.Array.data[2].BlockColor
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5317857117497631025, guid: 062dc9b4a04143741b963e615086e741, type: 3}
+      propertyPath: blockMaterials.Array.data[3].BlockColor
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5317857117497631025, guid: 062dc9b4a04143741b963e615086e741, type: 3}
+      propertyPath: blockMaterials.Array.data[4].BlockColor
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5317857117497631025, guid: 062dc9b4a04143741b963e615086e741, type: 3}
+      propertyPath: blockMaterials.Array.data[5].BlockColor
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5317857117497631025, guid: 062dc9b4a04143741b963e615086e741, type: 3}
+      propertyPath: blockMaterials.Array.data[6].BlockColor
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5317857117497631025, guid: 062dc9b4a04143741b963e615086e741, type: 3}
+      propertyPath: gridCellModelMaterials.Array.data[0].Material
+      value: 
+      objectReference: {fileID: 2100000, guid: 2843dcdf92106f249a7252fee50eb532, type: 2}
+    - target: {fileID: 5317857117497631025, guid: 062dc9b4a04143741b963e615086e741, type: 3}
+      propertyPath: gridCellModelMaterials.Array.data[1].Material
+      value: 
+      objectReference: {fileID: 2100000, guid: 9954a4c082df73c4ebcefc338ec97315, type: 2}
+    - target: {fileID: 5317857117497631025, guid: 062dc9b4a04143741b963e615086e741, type: 3}
+      propertyPath: gridCellModelMaterials.Array.data[2].Material
+      value: 
+      objectReference: {fileID: 2100000, guid: f51af089583522f4fb04a78d5d78ccec, type: 2}
+    - target: {fileID: 5317857117497631025, guid: 062dc9b4a04143741b963e615086e741, type: 3}
+      propertyPath: gridCellModelMaterials.Array.data[3].Material
+      value: 
+      objectReference: {fileID: 2100000, guid: b8c38fd9e40eacf4a9a0af3a1420b8b2, type: 2}
+    - target: {fileID: 5317857117497631025, guid: 062dc9b4a04143741b963e615086e741, type: 3}
+      propertyPath: gridCellModelMaterials.Array.data[4].Material
+      value: 
+      objectReference: {fileID: 2100000, guid: a2defc2578c562f4aa1109dd561d9ea6, type: 2}
+    - target: {fileID: 5317857117497631025, guid: 062dc9b4a04143741b963e615086e741, type: 3}
+      propertyPath: gridCellModelMaterials.Array.data[5].Material
+      value: 
+      objectReference: {fileID: 2100000, guid: c351f37aaba8da5469bfbffc5a7d4bb6, type: 2}
+    - target: {fileID: 5317857117497631025, guid: 062dc9b4a04143741b963e615086e741, type: 3}
+      propertyPath: gridCellModelMaterials.Array.data[6].Material
+      value: 
+      objectReference: {fileID: 2100000, guid: 47feef00ad9d2ed45a9b5a69e3ab98d7, type: 2}
+    - target: {fileID: 5317857117497631025, guid: 062dc9b4a04143741b963e615086e741, type: 3}
+      propertyPath: gridCellModelMaterials.Array.data[1].BlockColor
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5317857117497631025, guid: 062dc9b4a04143741b963e615086e741, type: 3}
+      propertyPath: gridCellModelMaterials.Array.data[2].BlockColor
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5317857117497631025, guid: 062dc9b4a04143741b963e615086e741, type: 3}
+      propertyPath: gridCellModelMaterials.Array.data[3].BlockColor
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5317857117497631025, guid: 062dc9b4a04143741b963e615086e741, type: 3}
+      propertyPath: gridCellModelMaterials.Array.data[4].BlockColor
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5317857117497631025, guid: 062dc9b4a04143741b963e615086e741, type: 3}
+      propertyPath: gridCellModelMaterials.Array.data[5].BlockColor
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5317857117497631025, guid: 062dc9b4a04143741b963e615086e741, type: 3}
+      propertyPath: gridCellModelMaterials.Array.data[6].BlockColor
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 5839730737569734291, guid: 062dc9b4a04143741b963e615086e741, type: 3}
       propertyPath: m_RootOrder
       value: 0

@@ -5,8 +5,10 @@ using UnityEngine;
 public class Block : MonoBehaviour
 {
     [SerializeField] private BlockData blockData;
-    [SerializeField] private BlockModel blockModel;
-    [SerializeField] private BlockColor color;
+    [SerializeField] private GridCellModel gridCellModel;
+    [SerializeField] private BlockColor blockColor;
+
+    private List<GridCellModel> gridCellModels = new List<GridCellModel>();
 
     public BlockData BlockData
     {
@@ -14,10 +16,13 @@ public class Block : MonoBehaviour
         set => blockData = value;
     }
 
-    public BlockColor Color
+    public BlockColor BlockColor
     {
-        get => color;
-        set => color = value;
+        get => blockColor;
+        set { 
+            blockColor = value;
+            SetBlockMaterialByColor();
+        }
     }
 
     public void GenerateBlockModel(float blockSize, float blockPositionZ)
@@ -33,23 +38,40 @@ public class Block : MonoBehaviour
                 {
                     if (BlockDataHelper.IsFullBlockCell(x, y, blockData))
                     {
-                        InstantiateBlockModel(x, y, gridSize, blockSize, blockPositionZ);
+                        InstantiateGridCellModel(x, y, gridSize, blockSize, blockPositionZ);
                     }                    
                 }
             }
         }
     }
 
-    private void InstantiateBlockModel(int x, int y, Vector2Int gridSize, float blockSize, float blockPositionZ)
+    private void InstantiateGridCellModel(int x, int y, Vector2Int gridSize, float blockSize, float blockPositionZ)
     {
-        if (blockModel)
+        if (gridCellModel)
         {
-            Vector3 blockModelPosition = MathHelper.GetGridCellPosition(x, y, gridSize, blockSize, blockPositionZ);
-            BlockModel currentblockModel = Instantiate(blockModel, blockModelPosition, Quaternion.identity, transform);
-            if (currentblockModel)
+            Vector3 gridCellModelPosition = MathHelper.GetGridCellPosition(x, y, gridSize, blockSize, blockPositionZ);
+            GridCellModel currentGridCellModel = Instantiate(gridCellModel, gridCellModelPosition, Quaternion.identity, transform);
+            if (currentGridCellModel)
             {
-                currentblockModel.name = $"blockModel[{x},{y}]";
+                gridCellModels.Add(currentGridCellModel);
+                currentGridCellModel.name = $"blockModel[{x},{y}]";                
             }
         }        
+    }
+
+    private void SetBlockMaterialByColor() 
+    {
+        int cridCellsModelsAmount = gridCellModels.Count;
+        if (cridCellsModelsAmount > 0)
+        {
+            for (int i = 0; i < cridCellsModelsAmount; i++)
+            {
+                GridCellModel currentGridCellModel = gridCellModels[i];
+                if (currentGridCellModel)
+                {
+                    currentGridCellModel.SetMaterial(blockColor);
+                }
+            }
+        }            
     }
 }

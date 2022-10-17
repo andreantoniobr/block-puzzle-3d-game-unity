@@ -112,7 +112,7 @@ public class GridCellController : MonoBehaviour
     {
         if (selectedGridCell && CanGetSelectedGridCells(selectedGridCell, out List<GridCell> gridCells))
         {
-            if (IsEmptyGridCells(gridCells) && CanPlaceGridCellsByCollor(gridCells))
+            if (IsEmptyGridCells(gridCells) || CanPlaceGridCellsByCollor(gridCells))
             {
                 PlaceBlock(gridCells);
                 PlacedBlockEvent?.Invoke();
@@ -307,7 +307,7 @@ public class GridCellController : MonoBehaviour
         if (gridCell && selectedMainBlock)
         {
             if (gridCell.Color == BlockColor.Default ||
-                gridCell.Color == selectedMainBlock.Color)
+                gridCell.Color == selectedMainBlock.BlockColor)
             {
                 isGridCellValidColor = true;
             }
@@ -325,7 +325,7 @@ public class GridCellController : MonoBehaviour
                 GridCell gridCell = gridCells[i];
                 if (gridCell)
                 {
-                    gridCell.Color = selectedMainBlock.Color;
+                    gridCell.Color = selectedMainBlock.BlockColor;
                 }
             }
         }

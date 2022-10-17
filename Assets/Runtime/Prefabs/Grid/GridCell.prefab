@@ -61,7 +61,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0}
-  gridCellColor: 0
+  color: -1
   isFull: 0
   isHover: 0
 --- !u!114 &3488482504154942232
