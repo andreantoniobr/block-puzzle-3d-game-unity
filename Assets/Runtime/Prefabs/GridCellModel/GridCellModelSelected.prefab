@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 246648846193365048, guid: 062dc9b4a04143741b963e615086e741, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 45c31f510f56c3f4c84ed5d984eadb3a, type: 2}
+      objectReference: {fileID: 2100000, guid: 24378084d6e03764d99ba1e2faa2fb46, type: 2}
     - target: {fileID: 5233747363007718545, guid: 062dc9b4a04143741b963e615086e741, type: 3}
       propertyPath: m_Name
       value: GridCellModelSelected
@@ -21,7 +21,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5839730737569734291, guid: 062dc9b4a04143741b963e615086e741, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5839730737569734291, guid: 062dc9b4a04143741b963e615086e741, type: 3}
       propertyPath: m_LocalPosition.x

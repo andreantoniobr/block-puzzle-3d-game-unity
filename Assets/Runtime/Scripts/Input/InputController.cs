@@ -9,11 +9,26 @@ public class InputController : MonoBehaviour
 
     private static Vector3 GetInputPosition()
     {
+
+#if UNITY_EDITOR
         return Input.mousePosition;
+#endif
+
+#if UNITY_ANDROID && !UNITY_EDITOR
+        return Input.GetTouch(0).position;
+#endif
     }
-    
+
     private static bool GetIsHolding()
     {
-        return Input.GetMouseButton(0);
+        bool isHolding = false;
+#if UNITY_EDITOR
+                isHolding = Input.GetMouseButton(0);
+#endif
+
+#if UNITY_ANDROID && !UNITY_EDITOR
+        isHolding = Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began;
+        #endif
+        return isHolding;
     }
 }

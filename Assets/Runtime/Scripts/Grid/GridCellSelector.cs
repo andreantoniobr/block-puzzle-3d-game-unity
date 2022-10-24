@@ -33,7 +33,7 @@ public class GridCellSelector : MonoBehaviour
             if (gridCell)
             {
                 GridCellHoverEvent?.Invoke(gridCell);
-                if (Input.GetMouseButtonDown(0))
+                if (!InputController.IsHolding)
                 {
                     GridCellSelectedEvent?.Invoke(gridCell);
                 }

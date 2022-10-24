@@ -94,3 +94,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0bc1ed719a30164d82df254497cf5ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gridCellModelMaterials: []
